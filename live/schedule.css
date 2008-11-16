@@ -4,16 +4,6 @@
 	width:890px;
 	height:615px;
 }
-#bigcontainer
-{
-	width:890px!important;
-	width:885px;
-	height:615px;
-  overflow-y:hidden;
-	/*	height:511px;
-		margin-bottom:10px;
-	overflow-y:scroll;	*/
-}
 #mediumcontianer
 {
 	height:615px!important;

@@ -4,11 +4,10 @@
 <script>var mousescroll=true;</script>
 <script src="schedule.js"></script>
 <link rel="stylesheet" type="text/css" href="schedule.css">
-<title>Schedule Planner trial</title>
+<title>Schedule Planner</title>
 </head>
 <body style='margin-top:5px;' onload="Init();">
-<h3>Spring 2009 Schedule Planner -- Trial Edition</h3>
-<div id='bigcontainer'>
+<h3>Spring 2009 Schedule Planner -- Development</h3>
 <div id='mediumcontianer'>
 <div id='times'>
 <?php 
@@ -34,7 +33,6 @@ echo "<div class='halfhour'></div>\n";
 <div id='W' class='day'></div>
 <div id='R' class='day'></div>
 <div id='F' class='day'></div>
-</div>
 </div>
 </div>
 <div id='container'>

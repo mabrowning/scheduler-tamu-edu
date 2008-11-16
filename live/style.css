@@ -1,0 +1,101 @@
+#login
+{
+	/*border:1px solid #DDDDFF;*/
+	padding:3px;
+	font-size:14px;
+}
+#content
+{
+	position:absolute;
+	top:50px;
+	left:170px;
+	padding:3px;
+}
+.inputlabel
+{
+	display:block;
+	width:140px;
+}
+.options
+{
+	font-size:14px;
+	display:block;
+	padding-top:20px;
+	margin-right:20px;
+	float:left;
+}
+body, table{
+	font: normal 11px/14px Verdana;
+}
+body { 
+	color: #555;
+	background: #fff;
+}
+
+h1, h2, h3 {
+	font: normal 2.4em Georgia;
+	color: #600;
+	background-color: #fff;
+}
+h2 {
+	font-size: 15px;
+	
+}
+h3 {
+	font-size: 13px;
+	font-style: italic;
+	height: 15px;
+}
+a:link { 
+	color: #cc9900;
+	text-decoration: none;
+}
+a:visited { 
+	text-decoration: none; 
+	color: #cc6633;
+}
+a:hover, a:active { 
+	color: #96c;
+	text-decoration: overline;
+}
+.inputbutton
+{
+	margin-top:5px;
+	background-color:#600;
+	color: #cc9900;
+	border:1px solid #600;
+	border-top-color:#a22;
+	border-right-color:#400;
+	border-left-color:#a22;	
+	border-bottom-color:#400;	
+}
+button 
+{
+	background-color:#600;
+	color: #cc9900;
+	border:1px solid #600;
+	border-top-color:#a22;
+	border-right-color:#400;
+	border-left-color:#a22;	
+	border-bottom-color:#400;
+}
+#error
+{
+	background-color:red;
+}
+#saves
+{
+	
+}
+.savedel
+{
+	
+}
+.Q
+{
+	list-style-type:circle!important;
+}
+.A
+{
+	list-style-type:circle!important;
+}

@@ -1,0 +1,186 @@
+#overlay
+{
+	position:absolute;
+	width:890px;
+	height:615px;
+}
+#bigcontainer
+{
+	width:890px!important;
+	width:885px;
+	height:615px;
+  overflow-y:hidden;
+	/*	height:511px;
+		margin-bottom:10px;
+	overflow-y:scroll;	*/
+}
+#mediumcontianer
+{
+	height:615px!important;
+	height:640px;
+	overflow-y:hidden;
+}
+#cal
+{
+	position:relative;
+	top:-612px!important;
+	top:-637px;
+	left:65px;
+	width:805px!important;
+	width:801px;
+	height:612px!important;
+	height:637px;
+	border-right:1px solid black;
+	border-bottom:1px solid black;
+}
+#times
+{
+	position:relative;
+	left:65px;
+	width:805px !important;
+	width:800px;
+	height:612px!important;
+	height:637px;
+	background-color:#EEEEFF;
+	padding:0px;
+	margin:0px;
+	
+}
+
+.day
+{	
+	float:left;
+	width:160px;
+	height:612px!important;
+	height:637px;
+	margin:0px;
+	padding:0px;
+	border-left:1px solid black;
+}
+.daylabel
+{
+	position:absolute;
+	top:-20px;
+}
+.hour
+{
+	border-top:1px solid black;
+	background-color:white;
+	width:100%;
+	height:25px;
+	margin:0px;
+	padding:0px;
+}
+.halfhour
+{
+	border-top:1px dashed black;
+	width:100%;
+	height:24px;
+	margin:0px;
+	padding:0px;
+}
+.hourlabel
+{
+	position:relative;
+	left:-61px;
+	top:15px;
+}
+.clstime
+{	
+	color:black;
+	position:absolute;
+	width:160px!important;
+	width:159px;
+	border:0px solid black;
+	border-top-width:1px;
+	border-bottom-width:1px;	overflow:hidden;
+	z-index:100;
+}
+.selected
+{
+	border-width:2px;
+	width:158px!important;
+}
+.classtime0
+{
+	background-color:#ffe099;
+}
+.classtime1
+{
+	background-color:#f4ff99;
+}
+.classtime2
+{
+	background-color:#7cf7e2;
+}
+.classtime3
+{
+	background-color:#99c3ff;
+}
+.classtime4
+{
+	background-color:#7c90f7;
+}
+.classtime5
+{
+	background-color:#e47cf7;
+}
+.classtime6
+{
+	background-color:#ffb299;
+}
+.classbox
+{
+	width:520px;
+	border:1px solid #CCCCCC;
+	padding-bottom:8px;
+}
+
+#container
+{
+	color:black;
+	/*position:absolute;
+	top:540px;*/
+	width:680px;
+	
+	float:left;
+}
+.coursesel
+{
+
+}
+.TDRspan
+{
+
+}
+.courserembut
+{
+	position:absolute;
+	left:501px;
+	background-color:#EE0000;
+	color:white;
+}
+#savelist
+{
+	position:absolute;
+	z-index:11;
+	left:680px;
+}
+.saveentry
+{
+	display:block;
+	height:20px;
+}
+.seats
+{
+}.grades
+{
+}
+.gradesel
+{
+	display:inline;
+}
+.gradegraph
+{
+	display:inline;
+}

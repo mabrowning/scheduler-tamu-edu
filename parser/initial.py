@@ -3,14 +3,14 @@
 import pickle
 import MySQLdb
 
-db = MySQLdb.connect(user="course",passwd="shoot",db="2009A")
+db = MySQLdb.connect(user="course",passwd="shoot",db="schedule")
 cur = db.cursor()
 def create_dept(dept):
 	cur.execute("INSERT INTO departments (abbreviation) VALUES ('"+dept+"');")
 	cur.execute("SELECT LAST_INSERT_ID();")
 	return (dept,cur.fetchone()[0])
-def create_course(dept,course):
-	cur.execute("INSERT INTO courses (department_id, number) VALUES ("+str(dept)+","+course+");")
+def create_course(dept,course,string):
+	cur.execute("INSERT INTO courses (department_id, number, description_string) VALUES ("+str(dept)+","+course+",'"+MySQLdb.escape_string(string)+"');")
 	cur.execute("SELECT LAST_INSERT_ID();")
 	return (course,cur.fetchone()[0])
 def create_prof(dept,prof):
@@ -47,7 +47,7 @@ for de in depts:
 print "adding courses..."
 for de in courses:
 	for co in courses[de]:
-		courses[de][co]=create_course(depts[de][1],courses[de][co])
+		courses[de][co]=create_course(depts[de][1],courses[de][co],sects[de][co][sects[de][co].keys()[0]]["description"])
 print "adding profs and sections..."
 profs={}
 for de in sects:

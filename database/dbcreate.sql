@@ -1,28 +1,27 @@
-   --CREATE DATABASE 2009A;
-   --GRANT ALL ON 2009A.* TO 'courses'@'localhost';
-   --USE 2009A;
-CREATE TABLE departments (
+CREATE TABLE IF NOT EXISTS departments(
   id INT(3) AUTO_INCREMENT PRIMARY KEY,
-  abbreviation CHAR(4) NOT NULL
+  dept CHAR(4) NOT NULL
 );
+TRUNCATE TABLE departments;
 
-CREATE TABLE courses (
+CREATE TABLE IF NOT EXISTS courses(
   id INT(5) AUTO_INCREMENT PRIMARY KEY,
   department_id INT(3) NOT NULL,
   number INT(3) NOT NULL,
-  name VARCHAR(75) NOT NULL,
-  description_string VARCHAR(1000),
+  description_string VARCHAR(1023),
   FOREIGN KEY (department_id) REFERENCES departments (id)
 );
+TRUNCATE TABLE courses;
 
-CREATE TABLE profs (
+CREATE TABLE IF NOT EXISTS profs(
   id INT(5) AUTO_INCREMENT PRIMARY KEY,
   department_id INT(3) NOT NULL,
   display_name VARCHAR(25) NOT NULL,
   FOREIGN KEY (department_id) REFERENCES departments (id)
 );
+TRUNCATE TABLE profs;
 
-CREATE TABLE sections (
+CREATE TABLE IF NOT EXISTS sections(
   id INT(6) AUTO_INCREMENT PRIMARY KEY,
   course_id INT(5) NOT NULL,
   prof_id INT(5) NOT NULL,
@@ -42,3 +41,4 @@ CREATE TABLE sections (
   FOREIGN KEY (course_id) REFERENCES courses (id),
   FOREIGN KEY (prof_id) REFERENCES profs (id)
 );
+TRUNCATE TABLE sections;

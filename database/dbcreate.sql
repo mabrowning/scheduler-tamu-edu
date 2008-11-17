@@ -42,3 +42,17 @@ CREATE TABLE IF NOT EXISTS sections(
   FOREIGN KEY (prof_id) REFERENCES profs (id)
 );
 TRUNCATE TABLE sections;
+
+CREATE TABLE IF NOT EXISTS grades(
+  id INT(7) AUTO_INCREMENT PRIMARY KEY,
+  department_id INT(3) NOT NULL,
+  prof_id INT(5) NOT NULL,
+  course_number INT(3) NOT NULL,
+  section_number INT(3) NOT NULL,
+  A INT(3) NOT NULL,
+  B INT(3) NOT NULL,
+  C INT(3) NOT NULL,
+  D INT(3) NOT NULL,
+  F INT(3) NOT NULL,
+  TOT INT(3) NOT NULL
+);

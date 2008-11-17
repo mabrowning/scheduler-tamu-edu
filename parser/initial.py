@@ -6,7 +6,7 @@ import MySQLdb
 db = MySQLdb.connect(user="course",passwd="shoot",db="schedule")
 cur = db.cursor()
 def create_dept(dept):
-	cur.execute("INSERT INTO departments (abbreviation) VALUES ('"+dept+"');")
+	cur.execute("INSERT INTO departments (dept) VALUES ('"+dept+"');")
 	cur.execute("SELECT LAST_INSERT_ID();")
 	return (dept,cur.fetchone()[0])
 def create_course(dept,course,string):
@@ -17,21 +17,21 @@ def create_prof(dept,prof):
 	cur.execute("INSERT INTO profs (department_id, display_name) VALUES ("+str(dept)+", '"+MySQLdb.escape_string(prof)+"');")
 	cur.execute("SELECT LAST_INSERT_ID();")
 	return cur.fetchone()[0]
-def create_section(course,section):
+def create_section(course,section,dept):
 	sql="INSERT INTO sections (course_id, prof_id, number, seats, seats_avail, credit, honors, writing_intensive, description_string, notes"
 	for i in range(len(section["tdr"])):
 		sql+=", TDR"+str(i)
 	sql+=" ) VALUES ("+str(course)+", "+str(section["prof"])+", "+section["section"]+", "+section["totalseats"]+", "+section["availseats"]+", "
 	sql+=section["credit"].split(' ')[0]+", " 
-	if (section["section"]>=200 and section["section"]<300) or section["section"]==970:
+	if dept!="KINE" and ((int(section["section"])>=200 and int(section["section"])<300) or int(section["section"])==970):
 		sql+="1, "
 	else:
 		sql+="0, "
-	if section["section"]>=900:
+	if int(section["section"])>=900:
 		sql+="1, "
 	else:
 		sql+="0, "
-	sql+="'"+MySQLdb.escape_string(section["description"])+"', '"+MySQLdb.escape_string(section["notes"])
+	sql+="'"+MySQLdb.escape_string(section["description"])+"', '"+MySQLdb.escape_string(section["notes"].strip("\n"))
 	for i in section["tdr"]:
 		sql+="', '"+i
 	sql+="');"
@@ -47,7 +47,7 @@ for de in depts:
 print "adding courses..."
 for de in courses:
 	for co in courses[de]:
-		courses[de][co]=create_course(depts[de][1],courses[de][co],sects[de][co][sects[de][co].keys()[0]]["description"])
+		courses[de][co]=create_course(depts[de][1],courses[de][co],sects[de][co][0]["description"])
 print "adding profs and sections..."
 profs={}
 for de in sects:
@@ -59,4 +59,4 @@ for de in sects:
 			else:
 				profs[de][se["prof"]]=create_prof(depts[de][1],se["prof"])
 				se["prof"]=profs[de][se["prof"]]
-			create_section(courses[de][co][1],se)
+			create_section(courses[de][co][1],se,depts[de][0])

@@ -33,7 +33,8 @@ class SectionHTMLParser(HTMLParser):
 		self.tagflag=""
 		self.strongflag=""
 		self.secnum="0"
-		self.donenotes=False
+		self.diddata=False
+		self.noteflag=False
 	def handle_starttag(self, tag, attrs):
 		args=self.handle_args(attrs)
 		if(tag=="td" and "class" in args and args["class"]=="sectionheading"):
@@ -42,10 +43,18 @@ class SectionHTMLParser(HTMLParser):
 				self.temp={}
 				self.temp["tdr"]=[]
 				self.temp["notes"]=""
-				self.donenotes=False
+				self.diddata=False
+				self.noteflag=False
 			self.strongflag="description"
 		if(tag=="strong"):
 			self.tagflag="strong"
+		if(tag=="td" and self.diddata):
+			self.diddata=False
+			self.noteflag=True
+		if(self.noteflag and tag=="a"):
+			self.temp["notes"]+='<a target="new" href="'+args["href"]+'">'
+		if(self.noteflag and tag=="br"):
+			self.temp["notes"]+="\n"
 	def handle_data(self, data):
 		if self.strongflag == "credit":
 			self.temp[self.strongflag]=data.strip("CR \r\n")
@@ -63,11 +72,12 @@ class SectionHTMLParser(HTMLParser):
 			tdr=data.split(";")[-1:][0].strip(" \t\r\n")
 			if tdr!="":
 				self.temp["tdr"].append(tdr)
+			self.noteflag=False
 		elif self.strongflag != "":
 			self.temp[self.strongflag]=data.strip(" \r\n")
 			self.strongflag=""
-		
-		if(self.tagflag=="strong"):
+			self.diddata=True
+		elif(self.tagflag=="strong"):
 			if data=="Instructor:":
 				self.strongflag="prof"
 			elif data=="Total Seats:":
@@ -78,13 +88,17 @@ class SectionHTMLParser(HTMLParser):
 				self.strongflag="credit"
 			elif data=="Locations:":
 				self.strongflag="tdr"
-		
+		elif(self.noteflag):
+			self.temp["notes"]+=data.strip(" \t\r\n").replace("\r\n"," ")
+	
 		self.tagflag="None"
 	def handle_endtag(self, tag):
 		if (tag=="td" and self.strongflag=="tdr"):
 			self.strongflag=""
 		if tag=="table":
 			self.sections.append(self.temp)
+		if (tag=="a" and self.noteflag):
+			self.temp["notes"]+="</a>"
 		self.tagflag=="None"
 	def handle_args(self, attrs):
 		args={}
@@ -130,7 +144,7 @@ sects={}
 # ["prof"]   -> the instructor teaching it. duh ;)
 # ["credit"] -> string containing the number of credits; format is "%d"
 # ["tdr"]    -> a simple array of strings containing the time, day, room strings
-# ["notes"]  -> empty;(TODO) should contain notes about the section (like, is it honors?, et c)
+# ["notes"]  -> contains notes about the section (like, is it honors?, et c)
 
 
 for de in depts:

@@ -152,7 +152,7 @@ for de in depts:
 	sects[de]={}
 	courses[de]=getcourses(de)
 	for co in courses[de]:
-		print "   "+courses[de][co]
+		print "   "+courses[de][co]+" ",
 		sects[de][co]=getsects(co)
 		
 # save this shit! It takes a long time to download, what if we crash in the next step?

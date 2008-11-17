@@ -7,8 +7,8 @@ db = MySQLdb.connect(user="course",passwd="shoot",db="2009A")
 cur = db.cursor()
 
 def create(dept,course):
-	cur.execute("CREATE TABLE IF NOT EXISTS "+dept+course+" ( section TEXT, prof TEXT, descrip TEXT, credit TEXT, seats TEXT, seatsleft TEXT, TDR0 TEXT, TDR1 TEXT, TDR2 TEXT, TDR3 TEXT, TDR4 TEXT);")
-	cur.execute("TRUNCATE TABLE "+dept+course+";")
+	#cur.execute("CREATE TABLE IF NOT EXISTS "+dept+course+" ( section TEXT, prof TEXT, descrip TEXT, credit TEXT, seats TEXT, seatsleft TEXT, TDR0 TEXT, TDR1 TEXT, TDR2 TEXT, TDR3 TEXT, TDR4 TEXT);")
+	#cur.execute("TRUNCATE TABLE "+dept+course+";")
 def append(dept,course,section):
 	sql="INSERT INTO "+dept+course+" ( section,prof,descrip,credit,seats,seatsleft"
 	for i in range(len(section["tdr"])):

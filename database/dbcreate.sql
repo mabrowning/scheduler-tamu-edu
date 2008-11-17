@@ -1,9 +1,8 @@
-CREATE DATABASE 2009A;
-GRANT ALL ON 2009A.* TO 'courses'@'localhost';
-USE 2009A;
+   --CREATE DATABASE 2009A;
+   --GRANT ALL ON 2009A.* TO 'courses'@'localhost';
+   --USE 2009A;
 CREATE TABLE departments (
   id INT(3) AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(100) NOT NULL,
   abbreviation CHAR(4) NOT NULL
 );
 

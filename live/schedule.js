@@ -77,7 +77,7 @@ function CalenderBlock(content)
 		this.daysDIV.appendChild(day_bord)
 		this.daysDIV.appendChild(day);
 	}
-	this.content.appendChild(days);	
+	this.content.appendChild(this.daysDIV);	
 	this.Position = function(start)
 	{
 		return 100*(start.Hours()-this.start_hour)/this.hours+'%';

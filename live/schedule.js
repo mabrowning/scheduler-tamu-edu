@@ -260,14 +260,15 @@ function Controller(course,id)
 	this.Choose = function(section)
 	{
 		log('Controller.Choose('+section+');');
-		if(this.chosen!=null)
+		/*if(this.chosen!=null)
 		{
 			this.course.UnChoose(this.chosen);
 			this.chosen.UnDraw();
-		}
+		}*/
 		this.chosen=this.course.Choose(section);
 		log('Controller.Choose: we are drawing '+this.chosen.dept+this.chosen.course+this.chosen.section);
 		this.chosen.Draw();
+
 	}
 	this.Destroy = function()
 	{

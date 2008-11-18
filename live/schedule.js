@@ -204,7 +204,7 @@ function Course(course,str)
 				 TDR.push(temp.rows[i].cells[j].innerHTML)
 		this.sections[temp.rows[i].cells[0].innerHTML]=new Section(
 		course.substr(0,4),
-		cours.substr(4,3),
+		course.substr(4,3),
 		temp.rows[i].cells[0].innerHTML,
 		TDR,
 		temp.rows[i].cells[1].innerHTML,

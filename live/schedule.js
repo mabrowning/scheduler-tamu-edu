@@ -214,7 +214,6 @@ function Class(class,str)
 		temp.rows[i].cells[4].innerHTML,
 		temp.rows[i].cells[5].innerHTML);
 	}
-	log(
 	this.Choose = function(section)
 	{
 		if(section=="" || section==null)section=0;

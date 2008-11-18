@@ -6,20 +6,20 @@
 }
 #mediumcontianer
 {
-	height:531px!important;
-	height:556px;
+	height:519px!important;
+	height:544px;
 	overflow-y:hidden;
 }
 #cal
 {
 	position:relative;
-	top:-531px!important;
-	top:-556px;
+	top:-519px!important;
+	top:-544px;
 	left:65px;
 	width:805px!important;
 	width:801px;
-	height:528px!important;
-	height:553px;
+	height:516px!important;
+	height:541px;
 	border-right:1px solid black;
 	border-bottom:1px solid black;
 }
@@ -29,8 +29,8 @@
 	left:65px;
 	width:805px !important;
 	width:800px;
-	height:531px!important;
-	height:556px;
+	height:519px!important;
+	height:544px;
 	background-color:#EEEEFF;
 	padding:0px;
 	margin:0px;
@@ -41,8 +41,8 @@
 {	
 	float:left;
 	width:160px;
-	height:612px!important;
-	height:637px;
+	height:519px!important;
+	height:544px;
 	margin:0px;
 	padding:0px;
 	border-left:1px solid black;

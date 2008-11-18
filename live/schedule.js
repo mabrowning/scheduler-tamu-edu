@@ -305,6 +305,11 @@ function Controller(class,id)
 		Controllers[this.id]=null;
 	}
 }
+function Browser()
+{
+	return;
+}
+
 function entsub(event)
 {
 	if(event && event.keyCode == 13)

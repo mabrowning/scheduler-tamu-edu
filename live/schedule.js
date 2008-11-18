@@ -287,7 +287,7 @@ function GetCourse(course,section)
 		return;
 	}
 	if(course=='')course=document.getElementById('tdept').value.toUpperCase()+document.getElementById('tcourse').value;
-	if(course in Courses])
+	if(course in Courses)
 		{
 			Controllers[Controllers.length] = new Controller(Courses[course],Controllers.length);
 			Controllers[Controllers.length-1].Choose(section);

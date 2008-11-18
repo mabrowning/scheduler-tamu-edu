@@ -127,8 +127,7 @@ function TimeBlock(content,start_time,stop_time,day)
 	this.Draw = function(color)
 	{
 //		if(this.isdrawn)this.UnDraw();
-		if(color=="")color="#FFE099";
-		this.color=color;
+		if(color)this.color=color;
 		this.oDIV.style.backgroundColor=this.color;
 		this.oDIV.style.top=Calender.Position(this.start_time);
 		this.oDIV.style.height=Calender.Height(this.start_time,this.stop_time);
@@ -179,11 +178,9 @@ function Section(dept,course,section,TDR,prof,credit,descrip,seats,seatsa)
 					this.TDR[i].substring(8,15),
 					this.TDR[i].substring(16,23),
 					this.TDR[i][j]));
-	this.Draw = function()
+	this.Draw = function(color)
 	{
 		log('Section.Draw();');
-		color=Calender.GetNextColor();
-		log('Section.Draw: got color '+color);
 		for(var i in this.timeblocks)
 			this.timeblocks[i].Draw(color);
 	}
@@ -252,6 +249,7 @@ function Controller(course,id)
 	this.course=course;
 	this.id=id;
 	this.chosen='';
+	this.color=Calender.GetNextColor();
 	this.oDIV=document.createElement('DIV');
 	this.oDIV.className='controller';
 	//This vvvvvvvvvvvvvv needs to be ... worked on.
@@ -275,7 +273,7 @@ function Controller(course,id)
 		}
 		this.chosen=this.course.Choose(section);
 		log('Controller.Choose: we are drawing '+this.chosen.dept+this.chosen.course+this.chosen.section);
-		this.chosen.Draw();
+		this.chosen.Draw(this.color);
 
 	}
 	this.Destroy = function()

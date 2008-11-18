@@ -84,7 +84,9 @@ function CalenderBlock(content)
 	} 
 	this.Height = function(start,stop)
 	{
-		return 100*(start.Hours()-stop.Hours())/this.hours+'%';
+		str=100*(start.Hours()-stop.Hours())/this.hours+'%';
+		log('new Height:'+str);
+		return str;
 	}
 }
 //This class is representative of a time and parsing a string as a time.

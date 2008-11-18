@@ -245,7 +245,7 @@ function Controller(course,id)
 	this.oDIV=document.createElement('DIV');
 	this.oDIV.className='controller';
 	//This vvvvvvvvvvvvvv needs to be ... worked on.
-	str="<SELECT onchange=\"Controllers["+this.id+"].Choose(this.selectedIndex);\">\n"
+	str="<SELECT onchange=\"Controllers["+this.id+"].Choose(this.value);\">\n"
 	for(sec in this.course.sections)
 		str+="<OPTION VALUE='"+sec+"'>"+sec+" - "+this.course.sections[sec].descrip+"\n"
 	str+="</SELECT>"

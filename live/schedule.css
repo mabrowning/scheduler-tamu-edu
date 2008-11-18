@@ -1,96 +1,74 @@
-#overlay
-{
-	position:absolute;
-	width:890px;
-	height:615px;
+/* This marks the sart of the rev 2 style */
+
+.halfhour{
+  position:absolute;
+  border-top:1px dashed black;
+  background-color:#EEEEFF;
+  width:100%;
 }
-#mediumcontianer
-{
-	height:522px!important;
-	height:547px;
-	overflow-y:hidden;
+.hour{
+  position:absolute;
+  border-top:1px solid black;
+  width:100%;
 }
-#cal
+.hourlabel{
+  position:relative;
+  top:0.5em;
+}
+.day{
+  float:left;
+  width:20%;
+  height:100%;
+}
+.daybord{
+  border-right:1px solid black;
+  height:100%;
+}
+#F.daybord{
+  border:none;
+  margin:0px;
+}
+.classblock{
+  position:relative;
+  border-top:1px solid black;
+  border-bottom:1px solid black;
+  background-color:#777777;
+}
+#hourlabels
 {
-	position:relative;
-	top:-519px!important;
-	top:-544px;
-	left:65px;
-	width:805px!important;
-	width:801px;
-	height:519px!important;
-	height:544px;
-	border-right:1px solid black;
-	border-bottom:1px solid black;
+  position:absolute;
+  left:-100px;
+  width:100px;
+  height:100%;
 }
 #times
 {
-	position:relative;
-	left:65px;
-	width:805px !important;
-	width:800px;
-	height:519px!important;
-	height:544px;
-	background-color:#EEEEFF;
-	padding:0px;
-	margin:0px;
-	
+  position:absolute;
+  border:1px solid black;
+  border-top:none;
+  overflow:hidden;
+  height:100%;
+  width:100%;
+}
+#days{
+  position:absolute;
+  margin:1px;
+  margin-top:0px;
+  height:100%;
+  width:100%;
+}
+#schedulecontainer
+{
+  position:relative;
+  height:800px;
+  width:500px;
+  left:100px;
 }
 
-.day
-{	
-	float:left;
-	width:160px;
-	height:519px!important;
-	height:544px;
-	margin:0px;
-	padding:0px;
-	border-left:1px solid black;
-}
-.daylabel
-{
-	position:absolute;
-	top:-20px;
-}
-.hour
-{
-	border-top:1px solid black;
-	background-color:white;
-	width:100%;
-	height:21px;
-	margin:0px;
-	padding:0px;
-}
-.halfhour
-{
-	border-top:1px dashed black;
-	width:100%;
-	height:20px;
-	margin:0px;
-	padding:0px;
-}
-.hourlabel
-{
-	position:relative;
-	left:-61px;
-	top:15px;
-}
-.clstime
-{	
-	color:black;
-	position:absolute;
-	width:160px!important;
-	width:159px;
-	border:0px solid black;
-	border-top-width:1px;
-	border-bottom-width:1px;
-	overflow:hidden;
-	z-index:100;
-}
+
 .selected
 {
 	border-width:2px;
-	width:158px!important;
 }
 .classtime0
 {

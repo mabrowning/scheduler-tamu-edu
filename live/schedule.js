@@ -233,6 +233,10 @@ function Course(course,str)
 		else if(!(section in this.sections))
 			return null;
 		log('Course.Choose('+section+');');
+		if(section in this.chosen){
+			log("Course.Choose: we won't choose a duplicate section!");
+			return false;
+		}
 		this.chosen[section]='';
 		return this.sections[section];
 	}
@@ -271,7 +275,9 @@ function Controller(course,id)
 		catch(e){
 			log('Controller.Choose: handled error');
 		}
-		this.chosen=this.course.Choose(section);
+		t=this.course.Choose(section);
+		if(!t)return;
+		this.chosen=t;
 		log('Controller.Choose: we are drawing '+this.chosen.dept+this.chosen.course+this.chosen.section);
 		this.chosen.Draw(this.color);
 

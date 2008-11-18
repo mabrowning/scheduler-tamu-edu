@@ -261,7 +261,7 @@ function Controller(course,id)
 			this.chosen.UnDraw();
 		}
 		this.chosen=this.course.Choose(section);
-		log('Controller.Choose: we are drawing '+this.chosen);
+		log('Controller.Choose: we are drawing '+this.chosen.dept+this.chosen.course+this.chosen.section);
 		this.chosen.Draw();
 	}
 	this.Destroy = function()

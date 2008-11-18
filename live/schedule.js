@@ -127,7 +127,7 @@ function TimeBlock(content,start_time,stop_time,day)
 		if(this.isdrawn)this.UnDraw();
 		if(style=="")style="0";
 		this.style=style;
-		this.oDIV.setAttribute('class',"clstime classtime"+this.style);
+		this.oDIV.className="classblock classtime"+this.style);
 		this.oDIV.style.top=Calender.Position(this.start_time);
 		this.oDIV.style.height=Calender.Height(this.start_time,this.stop_time);
 		Calender.days[this.day].appendChild(this.oDIV);

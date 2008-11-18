@@ -222,6 +222,7 @@ function Course(course,str)
 				{
 					section=sect;
 					log('Course.Choose: we chose '+section);
+					break;
 				}
 		}
 		else if(!(section in this.sections))

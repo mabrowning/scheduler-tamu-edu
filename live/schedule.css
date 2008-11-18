@@ -37,8 +37,8 @@
 #hourlabels
 {
   position:absolute;
-  left:-100px;
-  width:100px;
+  left:-80px;
+  width:80px;
   height:100%;
 }
 #times
@@ -60,9 +60,9 @@
 #schedulecontainer
 {
   position:relative;
-  height:800px;
-  width:500px;
-  left:100px;
+  height:400px;
+  width:600px;
+  left:80px;
 }
 
 

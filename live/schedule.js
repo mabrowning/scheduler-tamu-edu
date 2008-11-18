@@ -121,7 +121,8 @@ function TimeBlock(content,start_time,stop_time,day)
 	this.style="";
 	this.Draw = function(style)
 	{
-	if(this.isdrawn)this.UnDraw();
+		log("drawing timeblock");
+		if(this.isdrawn)this.UnDraw();
 		if(style=="")style="0";
 		this.style=style;
 		this.oDIV.setAttribute('class',"clstime classtime"+this.style);
@@ -140,9 +141,9 @@ function TimeBlock(content,start_time,stop_time,day)
 	{
 		if(!this.isdrawn || !test.isdrawn)return false;
 		if(this.start_time.GreaterThan(test.start_time) &&
-						test.stop_time.GreaterThan(this.start_time))return true;
+			test.stop_time.GreaterThan(this.start_time))return true;
 		if(test.start_time.GreaterThan(this.start_time) &&
-						this.stop_time.GreaterThan(test.start_time))return true;
+			this.stop_time.GreaterThan(test.start_time))return true;
 		return false;
 	}
 	this.Highlight = function()

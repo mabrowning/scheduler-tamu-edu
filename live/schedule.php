@@ -14,7 +14,7 @@
 	<div id='courseselector'>
 		<strong>Add course:</strong><input maxlength=4 size=4 id='tdept' onkeypress='entsub(event);'>
 		<input maxlength=3 size=3 id='tclass' onkeypress='entsub(event);'>
-		<BUTTON onclick='GetClass("","");'>Add</button>
+		<BUTTON onclick='GetCourse("","");'>Add</button>
 		<br/><em>Ex: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NUEN  &nbsp;&nbsp;&nbsp; 101</em>
 
 	<div id='coursebrowser'><script type='text/javascript'>browser=new Browser(); </script></div>

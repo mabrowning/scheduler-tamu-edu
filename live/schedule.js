@@ -261,7 +261,7 @@ function Controller(course,id)
 	{
 		log('Controller.Choose('+section+');');
 		try{
-			this.course.UnChoose(this.chosen);
+			this.course.UnChoose(this.chosen.section);
 			this.chosen.UnDraw();
 		}
 		catch(e){

@@ -57,7 +57,7 @@
 	border-top:1px solid black;
 	background-color:white;
 	width:100%;
-	height:25px;
+	height:21px;
 	margin:0px;
 	padding:0px;
 }
@@ -65,7 +65,7 @@
 {
 	border-top:1px dashed black;
 	width:100%;
-	height:24px;
+	height:20px;
 	margin:0px;
 	padding:0px;
 }
@@ -83,7 +83,8 @@
 	width:159px;
 	border:0px solid black;
 	border-top-width:1px;
-	border-bottom-width:1px;	overflow:hidden;
+	border-bottom-width:1px;
+	overflow:hidden;
 	z-index:100;
 }
 .selected

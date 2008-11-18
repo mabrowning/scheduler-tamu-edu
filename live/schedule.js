@@ -122,7 +122,7 @@ function TimeBlock(content,start_time,stop_time,day)
 	this.color="#FFFFFF";
 	this.Draw = function(color)
 	{
-		if(this.isdrawn)this.UnDraw();
+//		if(this.isdrawn)this.UnDraw();
 		if(color=="")color="#FFE099";
 		this.color=color;
 		this.oDIV.style.backgroundColor=this.color;
@@ -177,11 +177,13 @@ function Section(dept,course,section,TDR,prof,credit,descrip,seats,seatsa)
 					this.TDR[i][j]));
 	this.Draw = function()
 	{
+		log('Section.Draw();');
 		for(var i in this.timeblocks)
 			this.timeblocks[i].Draw(0);
 	}
 	this.UnDraw = function()
 	{
+		log('Section.UnDraw();');
 		for(var i in this.timeblocks)
 			this.timeblocks[i].UnDraw();
 	}
@@ -234,7 +236,9 @@ function Course(course,str)
 	this.Unchoose = function(section)
 	{ 
 		log('Course.UnChoose('+section+');');
-		log('UnChoose succedded:'+delete this.chosen[section]);
+		res=delete this.chosen[section];
+		if(!res)log('Course.UnChoose: failed!');
+		return res
 	}
 }
 function Controller(course,id)
@@ -245,7 +249,7 @@ function Controller(course,id)
 	this.oDIV=document.createElement('DIV');
 	this.oDIV.className='controller';
 	//This vvvvvvvvvvvvvv needs to be ... worked on.
-	str="<SELECT onchange=\"Controllers["+this.id+"].Choose(this.value);\">\n"
+	str="<SELECT onchange='Controllers["+this.id+"].Choose(this.value);'>\n"
 	for(sec in this.course.sections)
 		str+="<OPTION VALUE='"+sec+"'>"+sec+" - "+this.course.sections[sec].descrip+"\n"
 	str+="</SELECT>"

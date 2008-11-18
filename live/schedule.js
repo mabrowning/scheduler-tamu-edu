@@ -31,6 +31,15 @@ function CalenderBlock(content)
 	this.hours=12;
 	this.percent_height=50/this.hours+"%";
 	this.top_incr=50/this.hours;
+	
+	this.times=document.createElement('DIV'); 
+	this.hourlabels=document.createElement('DIV'); 
+	this.daysDIV=document.createElement('DIV');
+
+	this.times.setAttribute('id','this.times');
+	this.daysDIV.setAttribute('id','days');
+	this.hourlabels.setAttribute('id','this.hourlabels');	
+
 	for(i=this.start_hour;i<this.hours+this.start_hour;i++){
 		hour=document.createElement('DIV');
 		half=document.createElement('DIV');
@@ -48,14 +57,14 @@ function CalenderBlock(content)
 		half.style.top=2*(i-this.start_hour+.5)*this.top_incr+"%";
 		label.style.top= (i-this.start_hour+.5)*this.top_incr+"%";
 	
-		times.appendChild(hour);
-		times.appendChild(half);
+		this.times.appendChild(hour);
+		this.times.appendChild(half);
 	
 		label.innerHTML=(( i==0 || i==12 )?12:i%12)+":00 "+((i>11)?"PM":"AM");
-		hourlabels.appendChild(label);
+		this.hourlabels.appendChild(label);
 	}
-	this.content.appendChild(times);
-	this.content.appendChild(hourlabels);
+	this.content.appendChild(this.times);
+	this.content.appendChild(this.hourlabels);
 	this.days=[];
 	day_ar=new Array("M","T","W","R","F");
 	for(i=0;i<5;i++){
@@ -65,8 +74,8 @@ function CalenderBlock(content)
 		day_bord.className='daybord';
 		day_bord.setAttribute('id',day_ar[i]);
 		this.days[i]=day_bord;
-		day.appendChild(day_bord)
-		days.appendChild(day);
+		this.daysDIV.appendChild(day_bord)
+		this.daysDIV.appendChild(day);
 	}
 	this.content.appendChild(days);	
 	this.Position = function(start)

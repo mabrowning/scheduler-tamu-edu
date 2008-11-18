@@ -10,7 +10,7 @@ mouseUp=true;
 
 //This flag is only true when the XMLhttprequest is ready to start a new transaction
 xmlready=true;
-Coursees=new Array();
+Courses=new Array();
 Controllers=new Array();
 var ControllerDIV=null;
 var Hourspan=null;

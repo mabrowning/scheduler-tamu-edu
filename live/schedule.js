@@ -84,7 +84,7 @@ function CalenderBlock(content)
 	} 
 	this.Height = function(start,stop)
 	{
-		str=100*(start.Hours()-stop.Hours())/this.hours+'%';
+		str=100*(stop.Hours()-start.Hours())/this.hours+'%';
 		log('new Height:'+str);
 		return str;
 	}

@@ -238,14 +238,14 @@ function Course(course,str)
 		log('Course.UnChoose('+section+');');
 		res=delete this.chosen[section];
 		if(!res)log('Course.UnChoose: failed!');
-		return res
+		return res;
 	}
 }
 function Controller(course,id)
 {
 	this.course=course;
 	this.id=id;
-	this.chosen=null;
+	this.chosen='';
 	this.oDIV=document.createElement('DIV');
 	this.oDIV.className='controller';
 	//This vvvvvvvvvvvvvv needs to be ... worked on.
@@ -260,11 +260,11 @@ function Controller(course,id)
 	this.Choose = function(section)
 	{
 		log('Controller.Choose('+section+');');
-		/*if(this.chosen!=null)
+		if(this.chosen!='')
 		{
 			this.course.UnChoose(this.chosen);
 			this.chosen.UnDraw();
-		}*/
+		}
 		this.chosen=this.course.Choose(section);
 		log('Controller.Choose: we are drawing '+this.chosen.dept+this.chosen.course+this.chosen.section);
 		this.chosen.Draw();

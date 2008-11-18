@@ -233,7 +233,7 @@ function Course(course,str)
 		this.chosen[section]='';
 		return this.sections[section];
 	}
-	this.Unchoose = function(section)
+	this.UnChoose = function(section)
 	{ 
 		log('Course.UnChoose('+section+');');
 		res=delete this.chosen[section];
@@ -274,7 +274,7 @@ function Controller(course,id)
 	}
 	this.Destroy = function()
 	{
-		this.course.UnChoose(this.chosen);
+		this.course.UnChoose(this.chosen.section);
 		this.chosen.UnDraw();
 		this.oDIV.parentNode.removeChild(this.oDIV);
 		Controllers[this.id]=null;

@@ -260,10 +260,12 @@ function Controller(course,id)
 	this.Choose = function(section)
 	{
 		log('Controller.Choose('+section+');');
-		if(this.chosen!='')
-		{
+		try{
 			this.course.UnChoose(this.chosen);
 			this.chosen.UnDraw();
+		}
+		catch(e){
+			log('Controller.Choose: handled error');
 		}
 		this.chosen=this.course.Choose(section);
 		log('Controller.Choose: we are drawing '+this.chosen.dept+this.chosen.course+this.chosen.section);

@@ -8,7 +8,7 @@
 </head>
 <body style='margin-top:5px;' onload="Init();">
 <h3>Spring 2009 Schedule Planner -- Development</h3>
-<div id='schedulecontianer'>
+<div id='schedulecontainer'>
 </div><!-- mediumcontainer -->
 <div id='container'>
 	<div id='courseselector'>

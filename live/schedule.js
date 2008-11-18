@@ -84,9 +84,7 @@ function CalenderBlock(content)
 	} 
 	this.Height = function(start,stop)
 	{
-		str=100*(stop.Hours()-start.Hours())/this.hours+'%';
-		log('new Height:'+str);
-		return str;
+		return 100*(stop.Hours()-start.Hours())/this.hours+'%';
 	}
 }
 //This class is representative of a time and parsing a string as a time.
@@ -177,6 +175,7 @@ function Section(dept,class,section,TDR,prof,credit,descrip,seats,seatsa)
 					this.TDR[i].substring(8,15),
 					this.TDR[i].substring(16,23),
 					this.TDR[i][j]));
+	log(this.timeblocks);
 	this.Draw = function()
 	{
 		for(var i in this.timeblocks)
@@ -215,6 +214,7 @@ function Class(class,str)
 		temp.rows[i].cells[4].innerHTML,
 		temp.rows[i].cells[5].innerHTML);
 	}
+	log(
 	this.Choose = function(section)
 	{
 		if(section=="" || section==null)section=0;

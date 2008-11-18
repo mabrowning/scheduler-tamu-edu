@@ -86,6 +86,12 @@ function CalenderBlock(content)
 	{
 		return 100*(stop.Hours()-start.Hours())/this.hours+'%';
 	}
+	this.colors=new Array("#FFE099","#F4FF99","#7CF7E2","#99C3FF","#7C90F7","#E47CF7","#FFB299");
+	this.colorindex=0;
+	this.GetNextColor = function()
+	{
+		return this.colors[this.colorindex++%this.colors.length];
+	}
 }
 //This class is representative of a time and parsing a string as a time.
 function Time(str)
@@ -104,8 +110,6 @@ function Time(str)
 	{
 		return this.hour+this.minute/60;
 	}
-	this.alert = function()
-	{ alert(this.hour+" "+this.minute); }
 }
 //This class represents a single block of allocated time on the calender.
 function TimeBlock(content,start_time,stop_time,day)
@@ -178,8 +182,10 @@ function Section(dept,course,section,TDR,prof,credit,descrip,seats,seatsa)
 	this.Draw = function()
 	{
 		log('Section.Draw();');
+		color=Calender.GetNextColor();
+		log('Section.Draw: got color '+color);
 		for(var i in this.timeblocks)
-			this.timeblocks[i].Draw(0);
+			this.timeblocks[i].Draw(color);
 	}
 	this.UnDraw = function()
 	{

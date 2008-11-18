@@ -6,10 +6,10 @@ IE=(navigator.userAgent.toLowerCase().indexOf("msie")>-1)
 var Calender=null;
 
 //mouse flags
-mouseUp=True;
+mouseUp=true;
 
 //This flag is only true when the XMLhttprequest is ready to start a new transaction
-xmlready=True;
+xmlready=true;
 Classes=new Array();
 Controllers=new Array();
 var ControllerDIV=null;
@@ -29,8 +29,8 @@ function CalenderBlock(content)
 	this.content=content;
 	this.start_hour=8;
 	this.hours=12;
-	this.percent_height=50/hours+"%";
-	this.top_incr=50/hours;
+	this.percent_height=50/this.hours+"%";
+	this.top_incr=50/this.hours;
 	for(i=this.start_hour;i<this.hours+this.start_hour;i++){
 		hour=document.createElement('DIV');
 		half=document.createElement('DIV');

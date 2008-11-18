@@ -193,8 +193,8 @@ function Course(course,str)
 	temp=document.createElement('DIV');
 	temp.innerHTML=str;
 	temp=temp.firstChild;
-	this.sections=Object();
-	this.chosen=Object();
+	this.sections=Array();
+	this.chosen=Array();
 	this.course=course.substr(0,7);
 	for(var i=0;i<temp.rows.length;i++)
 	{//(dept,class,section,TDR,prof,credit,descrip,seats,seatsa)
@@ -215,22 +215,26 @@ function Course(course,str)
 	}
 	this.Choose = function(section)
 	{
-		if(section=='')
+		if(section==''||section=null)
 		{
+			log('Course.Choose: given a null section');
 			for(sect in this.sections)
 				if(!(sect in this.chosen))
 				{
 					section=sect;
+					log('Course.Choose: we chose '+section);
 				}
 		}
 		else if(!(section in this.sections))
 			return null;
+		log('Course.Choose('+section+');');
 		this.chosen[section]='';
 		return this.sections[section];
 	}
 	this.Unchoose = function(section)
 	{ 
-		return delete this.chosen[section];
+		log('Course.UnChoose('+section+');');
+		log('UnChoose succedded:'+delete this.chosen[section]);
 	}
 }
 function Controller(course,id)
@@ -251,6 +255,7 @@ function Controller(course,id)
 	ControllerDIV.appendChild(this.oDIV);
 	this.Choose = function(section)
 	{
+		log('Controller.Choose('+section+');');
 		this.course.UnChoose(this.chosen);
 		this.chosen.UnDraw();
 		this.chosen=this.course.Choose(section);

@@ -175,7 +175,6 @@ function Section(dept,course,section,TDR,prof,credit,descrip,seats,seatsa)
 					this.TDR[i].substring(8,15),
 					this.TDR[i].substring(16,23),
 					this.TDR[i][j]));
-	log(this.timeblocks);
 	this.Draw = function()
 	{
 		for(var i in this.timeblocks)
@@ -217,7 +216,7 @@ function Course(course,str)
 	{
 		if(section==''||section==null)
 		{
-			log('Course.Choose: given a null section');
+			log('Course.Choose: we were given a null section');
 			for(sect in this.sections)
 				if(!(sect in this.chosen))
 				{
@@ -241,6 +240,7 @@ function Controller(course,id)
 {
 	this.course=course;
 	this.id=id;
+	this.chosen=null;
 	this.oDIV=document.createElement('DIV');
 	this.oDIV.className='controller';
 	//This vvvvvvvvvvvvvv needs to be ... worked on.
@@ -251,14 +251,14 @@ function Controller(course,id)
 	str+="<a href=# onclick='Controllers["+this.id+"].Destroy();>X</a>";
 	this.oDIV.innerHTML=str;
 	str="";
-	this.chosen=this.course.Choose();
 	ControllerDIV.appendChild(this.oDIV);
 	this.Choose = function(section)
 	{
 		log('Controller.Choose('+section+');');
-		this.course.UnChoose(this.chosen);
+		if(this.chosen)this.course.UnChoose(this.chosen);
 		this.chosen.UnDraw();
 		this.chosen=this.course.Choose(section);
+		log('Controller.Choose: we are drawing '+this.chosen);
 		this.chosen.Draw();
 	}
 	this.Destroy = function()
@@ -287,11 +287,10 @@ function GetCourse(course,section)
 		return;
 	}
 	if(course=='')course=document.getElementById('tdept').value.toUpperCase()+document.getElementById('tcourse').value;
-	if(Courses[course])
+	if(course in Courses])
 		{
 			Controllers[Controllers.length] = new Controller(Courses[course],Controllers.length);
-			if(section)
-				Controllers[Controllers.length-1].Choose(section);
+			Controllers[Controllers.length-1].Choose(section);
 			return;
 		}
 	xmlhttp=null;
@@ -314,7 +313,7 @@ function GetCourse(course,section)
 			xmlready=true;
 			Courses[course]=new Course(course,temp);
 			Controllers[Controllers.length] = new Controller(Courses[course],Controllers.length);
-			if(section)Controllers[Controllers.length-1].Choose(section)
+			Controllers[Controllers.length-1].Choose(section)
 		}
 		xmlhttp.open('GET','getclass.php?class='+course,true);
 		xmlhttp.send(null);

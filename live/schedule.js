@@ -74,7 +74,7 @@ function CalenderBlock(content)
 		day_bord.className='daybord';
 		day_bord.setAttribute('id',day_ar[i]);
 		this.days[i]=day_bord;
-		this.daysDIV.appendChild(day_bord)
+		day.appendChild(day_bord)
 		this.daysDIV.appendChild(day);
 	}
 	this.content.appendChild(this.daysDIV);	

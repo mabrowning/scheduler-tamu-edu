@@ -3,7 +3,7 @@
 import pickle
 import MySQLdb
 
-db = MySQLdb.connect(host='crusty',user="course",passwd="shoot",db="schedule")
+db = MySQLdb.connect(user="course",passwd="shoot",db="schedule")
 cur = db.cursor()
 def create_dept(dept):
 	cur.execute("INSERT INTO departments (dept) VALUES ('"+dept+"');")

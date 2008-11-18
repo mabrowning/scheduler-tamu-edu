@@ -13,7 +13,7 @@
 <?php 
 $start_hour=8;
 $last_hour=19;
-for($i=8;$i<19;$i++)
+for($i=8;$i<20;$i++)
 {
 	$j=($i%12);
 	if($i==0||$i==12)$j="12";
@@ -34,10 +34,12 @@ for($i=8;$i<19;$i++)
 </div><!-- cal -->
 </div><!-- mediumcontainer -->
 <div id='container'>
-	<strong>Add course:</strong><input maxlength=4 size=4 id='tdept' onkeypress='entsub(event);'>
-	<input maxlength=3 size=3 id='tclass' onkeypress='entsub(event);'>
-	<BUTTON onclick='GetClass("","");'>Add</button>
-	<br/><em>Ex: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NUEN  &nbsp;&nbsp;&nbsp; 101</em>
+	<div id='courseselector'>
+		<strong>Add course:</strong><input maxlength=4 size=4 id='tdept' onkeypress='entsub(event);'>
+		<input maxlength=3 size=3 id='tclass' onkeypress='entsub(event);'>
+		<BUTTON onclick='GetClass("","");'>Add</button>
+		<br/><em>Ex: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NUEN  &nbsp;&nbsp;&nbsp; 101</em>
+
 	<div id='coursebrowser'><script type='text/javascript'>browser=new Browser(); </script></div>
 	<strong>Total Hours: <span id='hours'>0</span></strong>
 	<div id='controllerDIV'></div>

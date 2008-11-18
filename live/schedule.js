@@ -36,9 +36,9 @@ function CalenderBlock(content)
 	this.hourlabels=document.createElement('DIV'); 
 	this.daysDIV=document.createElement('DIV');
 
-	this.times.setAttribute('id','this.times');
+	this.times.setAttribute('id','times');
 	this.daysDIV.setAttribute('id','days');
-	this.hourlabels.setAttribute('id','this.hourlabels');	
+	this.hourlabels.setAttribute('id','hourlabels');	
 
 	for(i=this.start_hour;i<this.hours+this.start_hour;i++){
 		hour=document.createElement('DIV');

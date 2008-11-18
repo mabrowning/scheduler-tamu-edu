@@ -52,6 +52,7 @@
 }
 #days{
   position:absolute;
+  overflow:hidden;
   margin:1px;
   margin-top:0px;
   height:100%;

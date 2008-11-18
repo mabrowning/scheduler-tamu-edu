@@ -215,7 +215,7 @@ function Course(course,str)
 	}
 	this.Choose = function(section)
 	{
-		if(section==''||section=null)
+		if(section==''||section==null)
 		{
 			log('Course.Choose: given a null section');
 			for(sect in this.sections)

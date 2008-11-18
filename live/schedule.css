@@ -28,7 +28,7 @@
   border:none;
   margin:0px;
 }
-.classblock{
+.timeblock{
   position:relative;
   border-top:1px solid black;
   border-bottom:1px solid black;
@@ -98,7 +98,7 @@
 {
 	background-color:#ffb299;
 }
-.classbox
+.controller
 {
 	width:520px;
 	border:1px solid #CCCCCC;

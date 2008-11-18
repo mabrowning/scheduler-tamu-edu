@@ -10,7 +10,7 @@ mouseUp=true;
 
 //This flag is only true when the XMLhttprequest is ready to start a new transaction
 xmlready=true;
-Classes=new Array();
+Coursees=new Array();
 Controllers=new Array();
 var ControllerDIV=null;
 var Hourspan=null;
@@ -117,15 +117,15 @@ function TimeBlock(content,start_time,stop_time,day)
 	this.oDIV= document.createElement('DIV');
 	this.oDIV.innerHTML=this.content;
 	this.oDIV.setAttribute('title',start_time+" - "+stop_time);
+	this.oDIV.className="timeblock";
 	this.isdrawn=false;
-	this.style="";
-	this.Draw = function(style)
+	this.color="#FFFFFF";
+	this.Draw = function(color)
 	{
-		log("drawing timeblock");
 		if(this.isdrawn)this.UnDraw();
-		if(style=="")style="0";
-		this.style=style;
-		this.oDIV.className="classblock classtime"+this.style;
+		if(color=="")color="#FFE099";
+		this.color=color;
+		this.oDIV.style.backgroundColor=this.color;
 		this.oDIV.style.top=Calender.Position(this.start_time);
 		this.oDIV.style.height=Calender.Height(this.start_time,this.stop_time);
 		Calender.days[this.day].appendChild(this.oDIV);
@@ -148,17 +148,17 @@ function TimeBlock(content,start_time,stop_time,day)
 	}
 	this.Highlight = function()
 	{
-		this.oDIV.setAttribute('class','clstime selected classtime'+this.style);
+		this.oDIV.className='timeblock selected';
 	}
 	this.UnHighlight = function()
 	{
-		this.oDIV.setAttribute('class','clstime classtime'+this.style);
+		this.oDIV.className='timeblock';
 	}
 }
-function Section(dept,class,section,TDR,prof,credit,descrip,seats,seatsa)
+function Section(dept,course,section,TDR,prof,credit,descrip,seats,seatsa)
 {
 	this.dept=dept;
-	this.class=class;
+	this.course=course;
 	this.section=section;
 	this.TDR=TDR;
 	this.prof=prof;
@@ -167,7 +167,7 @@ function Section(dept,class,section,TDR,prof,credit,descrip,seats,seatsa)
 	this.seats=seats;
 	this.seatsa=seatsa;
 	this.timeblocks=[];
-	str=dept+" "+class+" "+section+" - "+prof+"\n"
+	str=dept+" "+course+" "+section+" - "+prof+"\n"
 	for(var i in this.TDR)
 		for(var j=0;j<5;j++)
 			if(this.TDR[i][j]!=" ")
@@ -188,24 +188,23 @@ function Section(dept,class,section,TDR,prof,credit,descrip,seats,seatsa)
 	}
 
 }
-function Class(class,str)
+function Course(course,str)
 {
 	temp=document.createElement('DIV');
 	temp.innerHTML=str;
 	temp=temp.firstChild;
-	this.sections=[];
-	this.sectionlist=[];
-	this.class=class.substr(0,7);
+	this.sections=Object();
+	this.chosen=Object();
+	this.course=course.substr(0,7);
 	for(var i=0;i<temp.rows.length;i++)
 	{//(dept,class,section,TDR,prof,credit,descrip,seats,seatsa)
-		this.sectionlist.push(temp.rows[i].cells[0].innerHTML);
 		TDR=[];
 		for(var j=6;j<11;j++)
 			 if(temp.rows[i].cells[j].innerHTML!="")
 				 TDR.push(temp.rows[i].cells[j].innerHTML)
 		this.sections[temp.rows[i].cells[0].innerHTML]=new Section(
-		class.substr(0,4),
-		class.substr(4,3),
+		course.substr(0,4),
+		cours.substr(4,3),
 		temp.rows[i].cells[0].innerHTML,
 		TDR,
 		temp.rows[i].cells[1].innerHTML,
@@ -216,40 +215,76 @@ function Class(class,str)
 	}
 	this.Choose = function(section)
 	{
-		if(section=="" || section==null)section=0;
-		if(!this.sections[section] && this.sectionlist[section])
-			section=this.sectionlist[section];
-		if(!this.sections[section])
-			return;
-		hours+=parseInt(this.sections[section].credit);
-		Hourspan.innerHTML=hours;
-		this.sections[section].Draw();
-		return section;
+		if(section=='')
+		{
+			for(sect in this.sections)
+				if(!(sect in this.chosen))
+				{
+					section=sect;
+				}
+		}
+		else if(!(section in this.sections))
+			return null;
+		this.chosen[section]='';
+		return this.sections[section];
 	}
 	this.Unchoose = function(section)
 	{ 
-		if(section=="" || section==null)section=0;
-		if(!this.sections[section] && this.sectionlist[section])
-			section=this.sectionlist[section];
-		if(!this.sections[section])
-			return;
-		hours-=parseInt(this.sections[section].credit);
-		Hourspan.innerHTML=hours;
-		this.sections[section].UnDraw();
-		return section;
+		return delete this.chosen[section];
 	}
 }
-function GetClass(class,section)
+function Controller(course,id)
+{
+	this.course=course;
+	this.id=id;
+	this.oDIV=document.createElement('DIV');
+	this.oDIV.className='controller';
+	//This vvvvvvvvvvvvvv needs to be ... worked on.
+	str="<SELECT onchange=\"Controllers["+this.id+"].Choose(this.selectedIndex);\">\n"
+	for(sec in this.course.sections)
+		str+="<OPTION VALUE='"+sec+"'>"+sec+" - "+this.course.sections[sec].descrip+"\n"
+	str+="</SELECT>"
+	str+="<a href=# onclick='Controllers["+this.id+"].Destroy();>X</a>";
+	this.oDIV.innerHTML=str;
+	str="";
+	this.chosen=this.course.Choose();
+	ControllerDIV.appendChild(this.oDIV);
+	this.Choose = function(section)
+	{
+		this.course.UnChoose(this.chosen);
+		this.chosen.UnDraw();
+		this.chosen=this.course.Choose(section);
+		this.chosen.Draw();
+	}
+	this.Destroy = function()
+	{
+		this.course.UnChoose(this.chosen);
+		this.chosen.UnDraw();
+		this.oDIV.parentNode.removeChild(this.oDIV);
+		Controllers[this.id]=null;
+	}
+}
+function Browser()
+{
+	return;
+}
+
+function entsub(event)
+{
+	if(event && event.keyCode == 13)
+		GetCourse("","");
+}
+function GetCourse(course,section)
 {
 	if(!xmlready)
 	{
-		window.setTimeout("GetClass("+class+"','"+section+"');",100);
+		window.setTimeout("GetCourse("+course+"','"+section+"');",100);
 		return;
 	}
-	if(class=='')class=document.getElementById('tdept').value.toUpperCase()+document.getElementById('tclass').value;
-	if(Classes[class])
+	if(course=='')course=document.getElementById('tdept').value.toUpperCase()+document.getElementById('tcourse').value;
+	if(Courses[course])
 		{
-			Controllers[Controllers.length] = new Controller(Classes[class],Controllers.length);
+			Controllers[Controllers.length] = new Controller(Courses[course],Controllers.length);
 			if(section)
 				Controllers[Controllers.length-1].Choose(section);
 			return;
@@ -266,54 +301,17 @@ function GetClass(class,section)
 		{
 			if(xmlhttp.readyState!=4 || xmlhttp.status!=200 || xmlhttp.responseText=='')return;
 			if(xmlhttp.responseText.indexOf('Query')>-1){
-				alert("Class doesn't exist..");
+				alert("Course doesn't exist..");
 				xmlready=true;
 				return;
 			}
 			temp=xmlhttp.responseText;
 			xmlready=true;
-			Classes[class]=new Class(class,temp);
-			Controllers[Controllers.length] = new Controller(Classes[class],Controllers.length);
+			Courses[course]=new Course(course,temp);
+			Controllers[Controllers.length] = new Controller(Courses[course],Controllers.length);
 			if(section)Controllers[Controllers.length-1].Choose(section)
 		}
-		xmlhttp.open('GET','getclass.php?class='+class,true);
+		xmlhttp.open('GET','getclass.php?class='+course,true);
 		xmlhttp.send(null);
 	}
-}
-function Controller(class,id)
-{
-	this.class=class;
-	this.id=id;
-	this.oDIV=document.createElement('DIV');
-	this.oDIV.setAttribute('class','classbox');
-	str="<SELECT onchange=\"Controllers["+this.id+"].Choose(this.selectedIndex);\">\n"
-	for(sec in this.class.sections)
-		str+="<OPTION VALUE='"+sec+"'>"+sec+" - "+this.class.sections[sec].descrip+"\n"
-	str+="</SELECT>"
-	str+="<a href=# onclick='Controllers["+this.id+"].Destroy();>X</a>";
-	this.oDIV.innerHTML=str;
-	str="";
-	this.chosen=this.class.Choose();
-	ControllerDIV.appendChild(this.oDIV);
-	this.Choose = function(section)
-	{
-		this.class.Unchoose(this.chosen);
-		this.chosen=this.class.Choose(section);
-	}
-	this.Destroy = function()
-	{
-		this.class.Unchoose(this.chosen);
-		this.oDIV.parentNode.removeChild(this.oDIV);
-		Controllers[this.id]=null;
-	}
-}
-function Browser()
-{
-	return;
-}
-
-function entsub(event)
-{
-	if(event && event.keyCode == 13)
-		GetClass("","");
 }

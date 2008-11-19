@@ -4,7 +4,7 @@ IE=(navigator.userAgent.toLowerCase().indexOf("msie")>-1)
 //
 //This contains the main calender body
 var Calender=null;
-var courseget=null;
+
 //mouse flags
 mouseUp=true;
 
@@ -28,7 +28,7 @@ function error(str){
 function Init()
 {
 	Calender = new CalenderBlock(document.getElementById('schedulecontainer'));
-/*	courseget= new CourseGet();*/
+	courseget= new CourseGet();
 	ControllerDIV=document.getElementById('controllerDIV');
 	Hourspan=document.getElementById('hours');
 }

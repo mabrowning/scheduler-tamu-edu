@@ -23,10 +23,6 @@
   border-right:1px solid black;
   height:100%;
 }
-#F.daybord{
-  border:none;
-  margin:0px;
-}
 
 /******** TimeBlock styles **********/
 .timeblock{
@@ -34,6 +30,7 @@
   position:absolute;
   border-top:1px solid black;
   border-bottom:1px solid black;
+  border-right:1px solid black;
   background-color:#777777;
   width:20%;
 }
@@ -63,6 +60,7 @@
   position:absolute;
   border:1px solid black;
   border-top:none;
+  border-right:none;
   overflow:hidden;
   height:100%;
   width:100%;

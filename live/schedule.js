@@ -149,7 +149,7 @@ function AnimateTimeBlock(tb,draw)
 				tb.drawing=false;
 				tb.isdrawn=true;
 			}
-		},40/speed);
+		},50/speed);
 
 	}
 	else{
@@ -168,7 +168,7 @@ function AnimateTimeBlock(tb,draw)
 				tb.undrawing=false;
 				tb.isdrawn=false;
 			}
-		},40/speed);
+		},50/speed);
 	}
 }
 //This class represents a single block of allocated time on the calender.

@@ -199,7 +199,7 @@ function TimeBlock(content,start_time,stop_time,day)
 	this.Draw = function(color,id)
 	{
 		if(color)this.color=color;
-		this.oDIV.onclick="Controllers["+id+"].Select();";
+		this.oDIV.setAttribute('onclick',"Controllers["+id+"].Select();");
 		this.oDIV.style.backgroundColor=this.color;
 		this.oDIV.style.top=Calender.Position(this.start_time);
 		this.oDIV.style.height=Calender.Height(this.start_time,this.stop_time);

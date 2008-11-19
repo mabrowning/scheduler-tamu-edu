@@ -435,7 +435,7 @@ function Ajax()
 }
 function GetCourse(course,section)
 {
-/*	this.obj=this;*/
+	this.obj=this;
 	this.course=(course=="")?document.getElementById('tdept').value.toUpperCase()+document.getElementById('tcourse').value:course;
 	this.section=section;
 	this.AddController = function(){

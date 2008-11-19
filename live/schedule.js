@@ -130,7 +130,7 @@ function AnimateTimeBlock(tb,draw)
 	if(draw){
 		if(tb.drawing)return;
 		if(tb.undrawing){
-			tb.clearInterval(tb.interval);
+			window.clearInterval(tb.interval);
 			tb.undrawing=false;
 		}
 		else{

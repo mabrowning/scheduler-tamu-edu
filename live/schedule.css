@@ -15,7 +15,7 @@
   top:0.5em;
 }
 .day{
-  float:left;
+  position:absolute;
   width:20%;
   height:100%;
 }

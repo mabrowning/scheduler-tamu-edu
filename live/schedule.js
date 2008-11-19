@@ -141,11 +141,11 @@ function AnimateTimeBlock(tb,draw)
 		}
 		tb.drawing=true;
 		tb.interval=window.setInterval(function(){
-			log("drawing from"+tb.opacity+" in "+tb.section);
+			log("drawing from "+tb.opacity+" in "+tb.section);
 			tb.opacity=tb.opacity+.2;
 			SetOpacity(tb.oDIV,tb.opacity);
 			if(tb.opacity>=1){
-				log("finished drawing"+tb.section);
+				log("finished drawing "+tb.section);
 				window.clearInterval(tb.interval);
 				tb.drawing=false;
 				tb.isdrawn=true;
@@ -162,11 +162,11 @@ function AnimateTimeBlock(tb,draw)
 		}
 		tb.undrawing=true;
 		tb.interval=window.setInterval(function(){
-			log("undrawing from"+tb.opacity+" in "+tb.section);
+			log("undrawing from "+tb.opacity+" in "+tb.section);
 			tb.opacity=tb.opacity-.2;
 			SetOpacity(tb.oDIV,tb.opacity);
 			if(tb.opacity<=0){
-				log("finished undrawing"+tb.section);
+				log("finished undrawing "+tb.section);
 				window.clearInterval(tb.interval);
 				tb.oDIV.parentNode.removeChild(tb.oDIV);
 				tb.undrawing=false;

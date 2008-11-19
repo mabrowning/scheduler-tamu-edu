@@ -439,7 +439,7 @@ function CourseGet()
 	this.section="";
 	this.GetCourse = function(course,section)
 	{
-		this.course=(course=="")?document.getElementById('tdept').value.toUpperCase()+document.getElementById('tcourse').value:course;
+		this.course=course;
 		this.section=section;
 		log("CourseGet.GetCourse("+this.course+");");
 		if(this.course in Courses)

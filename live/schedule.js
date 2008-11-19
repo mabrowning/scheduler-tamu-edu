@@ -441,6 +441,7 @@ function CourseGet()
 	{
 		this.course=(course=="")?document.getElementById('tdept').value.toUpperCase()+document.getElementById('tcourse').value:course;
 		this.section=section;
+		log("CourseGet.GetCourse("+this.course+");");
 		if(this.course in Courses)
 			this.AddController();
 		else if(!ajax.xmlready)
@@ -457,6 +458,7 @@ function CourseGet()
 		courseget.AddController();
 	}
 	this.StartAjax = function(){
+		log("CourseGet.StartAjax(); "+this.course);
 		ajax.Start(this.Callback,'getclass.php?class='+this.course,"Course doesn't exist...");
 	}
 }

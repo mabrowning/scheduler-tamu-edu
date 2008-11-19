@@ -460,8 +460,8 @@ function CourseGet()
 		courseget.AddController();
 	}
 	this.StartAjax = function(){
-		log("CourseGet.StartAjax(); "+this.course);
-		ajax.Start(this.Callback,'getclass.php?class='+this.course,"Course doesn't exist...");
+		log("CourseGet.StartAjax(); "+courseget.course);
+		ajax.Start(courseget.Callback,'getclass.php?class='+courseget.course,"Course doesn't exist...");
 	}
 }
 

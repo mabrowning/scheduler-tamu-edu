@@ -398,7 +398,7 @@ function Browser()
 function entsub(event)
 {
 	if(event && event.keyCode == 13)
-		GetCourse(document.getElementById('tdept').value.toUpperCase()+document.getElementById('tcourse').value,"");
+		courseget.GetCourse(document.getElementById('tdept').value.toUpperCase()+document.getElementById('tcourse').value,"");
 }
 function Ajax()
 {

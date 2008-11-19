@@ -422,9 +422,8 @@ function Ajax()
 		ajax.xmlready=true;
 		ajax.callback(ajax.xmlhttp.responseText);
 	}
-	this.Start = function(obj,callback,URL,error)
+	this.Start = function(callback,URL,error)
 	{
-		this.obj=obj;
 		this.callback=callback;
 		this.error=(error==null)?"Generic Server Error:\nCould I be any more cyptic?":error;
 		this.xmlready=false;
@@ -433,26 +432,31 @@ function Ajax()
 	}
 
 }
-function GetCourse(course,section)
+courseget= new CourseGet();
+function CourseGet() 
 {
-	this.obj=this;
-	this.course=(course=="")?document.getElementById('tdept').value.toUpperCase()+document.getElementById('tcourse').value:course;
-	this.section=section;
+	this.course="";
+	this.section="";
+	this.GetCourse = function(course,section)
+	{
+		this.course=(course=="")?document.getElementById('tdept').value.toUpperCase()+document.getElementById('tcourse').value:course;
+		this.section=section;
+		if(this.course in Courses)
+			this.AddController();
+		else if(!ajax.xmlready)
+			window.setTimeout(this.StartAjax,100);
+		else
+			this.StartAjax();
+	}
 	this.AddController = function(){
 		Controllers[Controllers.length] = new Controller(Courses[this.course],Controllers.length);
 		Controllers[Controllers.length-1].Choose(this.section)
 	}
 	this.Callback = function(temp){
-		Courses[this.obj.course]=new Course(this.obj.course,temp);
-		this.obj.AddController();
+		Courses[courseget.course]=new Course(courseget.course,temp);
+		courseget.AddController();
 	}
 	this.StartAjax = function(){
-		ajax.Start(this,this.Callback,'getclass.php?class='+this.course,"Course doesn't exist...");
+		ajax.Start(this.Callback,'getclass.php?class='+this.course,"Course doesn't exist...");
 	}
-	if(this.course in Courses)
-		this.AddController();
-	else if(!ajax.xmlready)
-		window.setTimeout(this.StartAjax,100);
-	else
-		this.StartAjax();
 }

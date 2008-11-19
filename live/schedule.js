@@ -420,7 +420,7 @@ function Ajax()
 		this.xmlhttp.open('GET',URL,true);
 		this.xmlhttp.send(null);
 	}
-	this.xmlhttp.handle = function()
+	this.handle = function()
 	{
 		//handle should only be called from inside the current onreadystatechange callback function
 		//returns true is callback should continue and false if it should stop
@@ -458,7 +458,7 @@ function CourseGet()
 		Controllers[Controllers.length-1].Choose(this.section)
 	}
 	this.Callback = function(){
-		if(!this.handle())return;
+		if(!ajax.handle())return;
 		Courses[courseget.course]=new Course(courseget.course,this.responseText);
 		courseget.AddController();
 	}

@@ -178,7 +178,7 @@ function AnimateTimeBlock(tb,draw)
 //This class represents a single block of allocated time on the calender.
 function TimeBlock(content,start_time,stop_time,day)
 {
-	this.section=content.split(' ')[3];
+	this.section=content.split(' ')[2];
 	this.content=content.replace("\n","<BR/>\n");
 	this.start_time=new Time(start_time);
 	this.stop_time=new Time(stop_time);

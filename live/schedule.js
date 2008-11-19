@@ -119,6 +119,12 @@ function Time(str)
 		return this.hour+this.minute/60;
 	}
 }
+function SetOpacity(div,opacity){
+	if(IE)
+		div.style.filter='alpha(opacity='+opacity*100+')';
+	else
+		div.style.opacity=opacity;
+}
 function AnimateTimeBlock(tb,draw)
 {
 	if(draw){
@@ -128,19 +134,21 @@ function AnimateTimeBlock(tb,draw)
 			tb.undrawing=false;
 		}
 		else{
-			tb.oDIV.style.opacity=0;
+			tb.opacity=0;
+			SetOpacity(tb.oDIV,tb.opacity);
 			Calender.days[tb.day].appendChild(tb.oDIV);
 		}
 		tb.drawing=true;
 		tb.interval=window.setInterval(function(){
-			log("AnimateTimeBlock drawing step");
-			tb.oDIV.style.opacity+=.25;
-			if(tb.oDIV.style.opacity>=1){
+			log("AnimateTimeBlock drawing from"+tb.opacity);
+			tb.opacity=tb.opacity+.25;
+			SetOpacity(tb.oDIV,tb.opacity);
+			if(tb.opacity>=1){
 				window.clearInterval(tb.interval);
 				tb.drawing=false;
 				tb.isdrawn=true;
 			}
-		},200/speed);
+		},100/speed);
 
 	}
 	else{
@@ -152,14 +160,15 @@ function AnimateTimeBlock(tb,draw)
 		tb.isdrawn=false;
 		tb.undrawing=true;
 		tb.interval=window.setInterval(function(){
-			log("AnimateTimeBlock step");
-			tb.oDIV.style.opacity-=.25;
-			if(tb.oDIV.style.opacity<=0){
+			log("AnimateTimeBlock undrawing from"+tb.opacity);
+			tb.opacity=tb.opacity-.25;
+			SetOpacity(tb.oDIV,tb.opacity);
+			if(tb.opacity<=0){
 				window.clearInterval(tb.interval);
 				tb.oDIV.parentNode.removeChild(tb.oDIV);
 				tb.undrawing=false;
 			}
-		},200/speed);
+		},100/speed);
 	}
 }
 //This class represents a single block of allocated time on the calender.

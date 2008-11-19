@@ -446,8 +446,10 @@ function CourseGet()
 			this.AddController();
 		else if(!ajax.xmlready)
 			window.setTimeout(courseget.StartAjax,100);
-		else
+		else{
+			log("Starting StartAjax... "+this.course);
 			this.StartAjax();
+		}
 	}
 	this.AddController = function(){
 		Controllers[Controllers.length] = new Controller(Courses[this.course],Controllers.length);

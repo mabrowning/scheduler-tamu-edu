@@ -396,14 +396,14 @@ function Ajax()
 		error("No AJAX support in this browser... I'm half sad and half impressed...");
 	this.xmlhttp.onreadystatechange = function()
 	{
-		if(this.xmlhttp.readyState!=4 || this.xmlhttp.status!=200 || this.xmlhttp.responseText=='')return;
-		if(this.xmlhttp.responseText.indexOf('Query')>-1){
-			error(this.error);
+		if(ajax.xmlhttp.readyState!=4 || ajax.xmlhttp.status!=200 || ajax.xmlhttp.responseText=='')return;
+		if(ajax.xmlhttp.responseText.indexOf('Query')>-1){
+			error(ajax.error);
 			xmlready=true;
 			return;
 		}
 		xmlready=true;
-		this.callback(this.xmlhttp.responseText);
+		ajax.callback(ajax.xmlhttp.responseText);
 	}
 	this.Start = function(callback,URL,error)
 	{

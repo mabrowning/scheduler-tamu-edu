@@ -412,24 +412,26 @@ function Ajax()
 		this.xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 	else
 		error("No AJAX support in this browser... I'm half sad and half impressed...");
-	this.xmlhttp.onreadystatechange = function()
-	{
-		if(this.readyState!=4 || this.status!=200 || this.responseText=='')return;
-		if(this.responseText.indexOf('Query')>-1){
-			error(ajax.error);
-			ajax.xmlready=true;
-			return;
-		}
-		ajax.xmlready=true;
-		ajax.callback(this.responseText);
-	}
 	this.Start = function(callback,URL,error)
 	{
-		this.callback=callback;
+		this.xmlhttp.onreadystatechange=callback;
 		this.error=(error==null)?"Generic Server Error:\nCould I be any more cyptic?":error;
 /*		this.xmlready=false;*/
 		this.xmlhttp.open('GET',URL,true);
 		this.xmlhttp.send(null);
+	}
+	this.xmlhttp.handle = function()
+	{
+		//handle should only be called from inside the current onreadystatechange callback function
+		//returns true is callback should continue and false if it should stop
+ 		if(this.readyState!=4 || this.status!=200 || this.responseText=='')return false;
+		if(this.responseText.indexOf('Query')>-1)
+			error(ajax.error);
+			ajax.xmlready=true;
+			return false;
+		}
+		ajax.xmlready=true;
+		return true;
 	}
 
 }
@@ -455,8 +457,9 @@ function CourseGet()
 		Controllers[Controllers.length] = new Controller(Courses[this.course],Controllers.length);
 		Controllers[Controllers.length-1].Choose(this.section)
 	}
-	this.Callback = function(temp){
-		Courses[courseget.course]=new Course(courseget.course,temp);
+	this.Callback = function(){
+		if(!this.handle())return;
+		Courses[courseget.course]=new Course(courseget.course,this.responseText);
 		courseget.AddController();
 	}
 	this.StartAjax = function(){

@@ -148,7 +148,7 @@ function AnimateTimeBlock(tb,draw)
 				tb.drawing=false;
 				tb.isdrawn=true;
 			}
-		},100/speed);
+		},50/speed);
 
 	}
 	else{
@@ -168,7 +168,7 @@ function AnimateTimeBlock(tb,draw)
 				tb.oDIV.parentNode.removeChild(tb.oDIV);
 				tb.undrawing=false;
 			}
-		},100/speed);
+		},50/speed);
 	}
 }
 //This class represents a single block of allocated time on the calender.
@@ -328,13 +328,13 @@ function Controller(course,id)
 	this.oDIV.className='controller';
 	this.oDIV.style.backgroundColor=this.color;
 	//This was the old way of doing things
-/*	str="<SELECT onchange='Controllers["+this.id+"].Choose(this.value);'>\n"
+	str="<SELECT onchange='Controllers["+this.id+"].Choose(this.value);'>\n"
 	for(sec in this.course.sections)
 		str+="<OPTION VALUE='"+sec+"'>"+sec+" - "+this.course.sections[sec].descrip+"\n"
 	str+="</SELECT>"
 	str+="<a href=# onclick='Controllers["+this.id+"].Destroy();>X</a>";
 	this.oDIV.innerHTML=str;
-	delete str;*/
+	delete str;
 	ControllerDIV.appendChild(this.oDIV);
 	this.Choose = function(section)
 	{

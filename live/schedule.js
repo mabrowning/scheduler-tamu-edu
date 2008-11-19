@@ -14,11 +14,17 @@ speed=1;
 
 //This flag is only true when the XMLhttprequest is ready to start a new transaction
 xmlready=true;
+ajax=new Ajax();
 Courses=new Array();
 Controllers=new Array();
 var ControllerDIV=null;
 var Hourspan=null;
 hours=0;
+
+//This function is called when there is an error in user input or in operation. Eventually, it will be implemented in an error bar, but for now, we alert();
+function error(str){
+	alert(str);
+}
 
 //This function is called body onload to initialize the calender to the included DIV
 function Init()
@@ -375,46 +381,59 @@ function Browser()
 function entsub(event)
 {
 	if(event && event.keyCode == 13)
-		GetCourse("","");
+		GetCourse(document.getElementById('tdept').value.toUpperCase()+document.getElementById('tcourse').value,"");
+}
+function Ajax()
+{
+	this.error="Course doesn't exist..";
+	this.callback=null;
+	this.xmlhttp=null;
+	if (window.XMLHttpRequest)
+		this.xmlhttp=new XMLHttpRequest();
+	else if (window.ActiveXObject)
+		this.xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	else
+		error("No AJAX support in this browser... I'm half sad and half impressed...");
+	this.xmlhttp.onreadystatechange = function()
+	{
+		if(this.xmlhttp.readyState!=4 || this.xmlhttp.status!=200 || this.xmlhttp.responseText=='')return;
+		if(this.xmlhttp.responseText.indexOf('Query')>-1){
+			error(this.error);
+			xmlready=true;
+			return;
+		}
+		xmlready=true;
+		this.callback(this.xmlhttp.responseText);
+	}
+	this.Start = function(callback,URL,error)
+	{
+		this.callback=callback;
+		this.error=(error==null)?"Generic Server Error:\nCould I be any more cyptic?":error;
+		xmlready=false;
+		xmlhttp.open('GET',URL,true);
+		xmlhttp.send(null);
+	}
+
 }
 function GetCourse(course,section)
 {
-	if(!xmlready)
-	{
-		window.setTimeout("GetCourse("+course+"','"+section+"');",100);
-		return;
-	}
-	if(course=='')course=document.getElementById('tdept').value.toUpperCase()+document.getElementById('tcourse').value;
+	this.course=course;
+	this.section=section;
 	if(course in Courses)
-		{
-			Controllers[Controllers.length] = new Controller(Courses[course],Controllers.length);
-			Controllers[Controllers.length-1].Choose(section);
-			return;
-		}
-	xmlhttp=null;
-	if (window.XMLHttpRequest)
-		xmlhttp=new XMLHttpRequest();
-	else if (window.ActiveXObject)
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	if (xmlhttp!=null)
-	{
-		xmlready=false;
-		xmlhttp.onreadystatechange=function()
-		{
-			if(xmlhttp.readyState!=4 || xmlhttp.status!=200 || xmlhttp.responseText=='')return;
-			if(xmlhttp.responseText.indexOf('Query')>-1){
-				alert("Course doesn't exist..");
-				xmlready=true;
-				return;
-			}
-			temp=xmlhttp.responseText;
-			xmlready=true;
-			Courses[course]=new Course(course,temp);
-			delete temp;
-			Controllers[Controllers.length] = new Controller(Courses[course],Controllers.length);
-			Controllers[Controllers.length-1].Choose(section)
-		}
-		xmlhttp.open('GET','getclass.php?class='+course,true);
-		xmlhttp.send(null);
+		this.AddController();
+	else if(!xmlready)
+		window.setTimeout(this.StartAjax,100);
+	else
+		this.StartAjax();
+	this.StartAjax = function(){
+		ajax.Start(this.Callback,'getclass.php?class='+this.course,"Course doesn't exist...");
+	}
+	this.Callback = function(temp){
+		Courses[course]=new Course(course,temp);
+		this.AddController();
+	}
+	this.AddController = function(){
+		Controllers[Controllers.length] = new Controller(Courses[this.course],Controllers.length);
+		Controllers[Controllers.length-1].Choose(this.section)
 	}
 }

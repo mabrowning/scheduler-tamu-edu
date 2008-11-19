@@ -130,6 +130,7 @@ function AnimateTimeBlock(tb,draw)
 	if(draw){
 		if(tb.drawing)return;
 		if(tb.undrawing){
+			log('WERE undrawing in '+tb.content);
 			window.clearInterval(tb.interval);
 			tb.undrawing=false;
 		}
@@ -144,6 +145,7 @@ function AnimateTimeBlock(tb,draw)
 			tb.opacity=tb.opacity+.2;
 			SetOpacity(tb.oDIV,tb.opacity);
 			if(tb.opacity>=1){
+				log("finished drawing"+tb.content);
 				window.clearInterval(tb.interval);
 				tb.drawing=false;
 				tb.isdrawn=true;
@@ -154,6 +156,7 @@ function AnimateTimeBlock(tb,draw)
 	else{
 		if(tb.undrawing)return;
 		if(tb.drawing){
+			log('WERE drawing in '+tb.content.substr(14));
 			window.clearInterval(tb.interval);
 			tb.drawing=false;
 		}
@@ -164,6 +167,7 @@ function AnimateTimeBlock(tb,draw)
 			tb.opacity=tb.opacity-.2;
 			SetOpacity(tb.oDIV,tb.opacity);
 			if(tb.opacity<=0){
+				log("finished undrawing"+tb.content);
 				window.clearInterval(tb.interval);
 				tb.oDIV.parentNode.removeChild(tb.oDIV);
 				tb.undrawing=false;

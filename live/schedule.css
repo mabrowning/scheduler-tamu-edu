@@ -15,11 +15,9 @@
   top:0.5em;
 }
 .day{
-  position:absolute;
-  border-right:1px solid black;
+  float:left;
   width:20%;
   height:100%;
-  overflow:hidden;
 }
 .daybord{
   border-right:1px solid black;

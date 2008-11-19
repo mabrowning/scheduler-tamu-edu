@@ -420,16 +420,16 @@ function GetCourse(course,section)
 	
 	this.course=(course=="")?document.getElementById('tdept').value.toUpperCase()+document.getElementById('tcourse').value:course;
 	this.section=section;
-	this.StartAjax = function(){
-		ajax.Start(this.Callback,'getclass.php?class='+this.course,"Course doesn't exist...");
+	this.AddController = function(){
+		Controllers[Controllers.length] = new Controller(Courses[this.course],Controllers.length);
+		Controllers[Controllers.length-1].Choose(this.section)
 	}
 	this.Callback = function(temp){
 		Courses[course]=new Course(course,temp);
 		this.AddController();
 	}
-	this.AddController = function(){
-		Controllers[Controllers.length] = new Controller(Courses[this.course],Controllers.length);
-		Controllers[Controllers.length-1].Choose(this.section)
+	this.StartAjax = function(){
+		ajax.Start(this.Callback,'getclass.php?class='+this.course,"Course doesn't exist...");
 	}
 	if(course in Courses)
 		this.AddController();
@@ -437,5 +437,4 @@ function GetCourse(course,section)
 		window.setTimeout(this.StartAjax,100);
 	else
 		this.StartAjax();
-
 }

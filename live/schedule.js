@@ -142,7 +142,6 @@ function AnimateTimeBlock(tb,draw)
 	if(draw){
 		if(tb.drawing)return;
 		if(tb.undrawing){
-			log('we WERE undrawing in '+tb.section);
 			window.clearInterval(tb.interval);
 			tb.undrawing=false;
 		}
@@ -156,7 +155,6 @@ function AnimateTimeBlock(tb,draw)
 			tb.opacity=tb.opacity+.2;
 			SetOpacity(tb.oDIV,tb.opacity);
 			if(tb.opacity>.9){
-				log("finished drawing "+tb.section);
 				window.clearInterval(tb.interval);
 				tb.drawing=false;
 				tb.isdrawn=true;

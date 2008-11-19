@@ -435,7 +435,7 @@ function Ajax()
 }
 function GetCourse(course,section)
 {
-	this.obj=this;	
+/*	this.obj=this;*/
 	this.course=(course=="")?document.getElementById('tdept').value.toUpperCase()+document.getElementById('tcourse').value:course;
 	this.section=section;
 	this.AddController = function(){
@@ -449,7 +449,7 @@ function GetCourse(course,section)
 	this.StartAjax = function(){
 		ajax.Start(this,this.Callback,'getclass.php?class='+this.course,"Course doesn't exist...");
 	}
-	if(course in Courses)
+	if(this.course in Courses)
 		this.AddController();
 	else if(!ajax.xmlready)
 		window.setTimeout(this.StartAjax,100);

@@ -349,7 +349,9 @@ function Controller(course,id)
 			this.course.UnChoose(this.chosen.section);
 			this.chosen.UnDraw();
 		}
-		catch(e)log("Controller.Destoy: handled error");
+		catch(e){
+			log("Controller.Destoy: handled error");
+		}
 		this.oDIV.parentNode.removeChild(this.oDIV);
 		Controllers[this.id]=null;
 	}

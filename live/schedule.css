@@ -16,6 +16,7 @@
 }
 .day{
   position:absolute;
+  border-right:1px solid black;
   width:20%;
   height:100%;
 }

@@ -160,7 +160,6 @@ function AnimateTimeBlock(tb,draw)
 			window.clearInterval(tb.interval);
 			tb.drawing=false;
 		}
-		tb.isdrawn=false;
 		tb.undrawing=true;
 		tb.interval=window.setInterval(function(){
 			log("AnimateTimeBlock undrawing from"+tb.opacity);
@@ -171,6 +170,7 @@ function AnimateTimeBlock(tb,draw)
 				window.clearInterval(tb.interval);
 				tb.oDIV.parentNode.removeChild(tb.oDIV);
 				tb.undrawing=false;
+				tb.isdrawn=false;
 			}
 		},40/speed);
 	}
@@ -190,7 +190,6 @@ function TimeBlock(content,start_time,stop_time,day)
 	this.color="#FFFFFF";
 	this.Draw = function(color)
 	{
-		if(this.isdrawn);
 		if(color)this.color=color;
 		this.oDIV.style.backgroundColor=this.color;
 		this.oDIV.style.top=Calender.Position(this.start_time);

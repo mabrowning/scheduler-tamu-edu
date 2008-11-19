@@ -1,5 +1,4 @@
-/* This marks the sart of the rev 2 style */
-
+/**** CalenderBlock division and labeling styles ***/
 .halfhour{
   position:absolute;
   border-top:1px dashed black;
@@ -28,12 +27,8 @@
   border:none;
   margin:0px;
 }
-.timeblock{
-  position:relative;
-  border-top:1px solid black;
-  border-bottom:1px solid black;
-  background-color:#777777;
-}
+
+/******** 1 time use, id based styles for CalenderBlock ****/
 #hourlabels
 {
   position:absolute;
@@ -58,6 +53,28 @@
   height:100%;
   width:100%;
 }
+
+
+/******** TimeBlock styles **********/
+.timeblock{
+  position:relative;
+  border-top:1px solid black;
+  border-bottom:1px solid black;
+  background-color:#777777;
+}
+.selected
+{
+	border-width:2px;
+}
+
+
+/***** Controller Styles  ******/
+.controller
+{
+	width:520px;
+	border:1px solid #CCCCCC;
+	padding-bottom:8px;
+}
 #schedulecontainer
 {
   position:relative;
@@ -65,63 +82,13 @@
   width:800px;
   left:80px;
 }
-
-
-.selected
-{
-	border-width:2px;
-}
-.classtime0
-{
-	background-color:#ffe099;
-}
-.classtime1
-{
-	background-color:#f4ff99;
-}
-.classtime2
-{
-	background-color:#7cf7e2;
-}
-.classtime3
-{
-	background-color:#99c3ff;
-}
-.classtime4
-{
-	background-color:#7c90f7;
-}
-.classtime5
-{
-	background-color:#e47cf7;
-}
-.classtime6
-{
-	background-color:#ffb299;
-}
-.controller
-{
-	width:520px;
-	border:1px solid #CCCCCC;
-	padding-bottom:8px;
-}
-
 #container
 {
 	color:black;
 	/*position:absolute;
 	top:540px;*/
 	width:680px;
-	
 	float:left;
-}
-.coursesel
-{
-
-}
-.TDRspan
-{
-
 }
 .courserembut
 {
@@ -130,6 +97,9 @@
 	background-color:#EE0000;
 	color:white;
 }
+
+
+/**** Other page components ****/
 #savelist
 {
 	position:absolute;

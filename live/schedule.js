@@ -63,6 +63,9 @@ function CalenderBlock(content)
 		label.innerHTML=(( i==0 || i==12 )?12:i%12)+":00 "+((i>11)?"PM":"AM");
 		this.hourlabels.appendChild(label);
 	}
+	delete hour;
+	delete half;
+	delete label;
 	this.content.appendChild(this.times);
 	this.content.appendChild(this.hourlabels);
 	this.days=[];
@@ -77,6 +80,7 @@ function CalenderBlock(content)
 		day.appendChild(day_bord)
 		this.daysDIV.appendChild(day);
 	}
+	delete day_ar;
 	this.content.appendChild(this.daysDIV);	
 	this.Position = function(start)
 	{
@@ -178,6 +182,7 @@ function Section(dept,course,section,TDR,prof,credit,descrip,seats,seatsa)
 					this.TDR[i].substring(8,15),
 					this.TDR[i].substring(16,23),
 					this.TDR[i][j]));
+	delete str;
 	this.Draw = function(color)
 	{
 		log('Section.Draw();');
@@ -217,6 +222,7 @@ function Course(course,str)
 		temp.rows[i].cells[4].innerHTML,
 		temp.rows[i].cells[5].innerHTML);
 	}
+	delete temp;
 	this.Choose = function(section)
 	{
 		if(section==''||section==null)
@@ -232,6 +238,7 @@ function Course(course,str)
 		}
 		else if(!(section in this.sections))
 			return null;
+		delete sect;
 		log('Course.Choose('+section+');');
 		if(section in this.chosen){
 			log("Course.Choose: we won't choose a duplicate section!");
@@ -258,14 +265,13 @@ function Controller(course,id)
 	this.oDIV=document.createElement('DIV');
 	this.oDIV.className='controller';
 	this.oDIV.style.backgroundColor=this.color;
-	//This vvvvvvvvvvvvvv needs to be ... worked on.
 	str="<SELECT onchange='Controllers["+this.id+"].Choose(this.value);'>\n"
 	for(sec in this.course.sections)
 		str+="<OPTION VALUE='"+sec+"'>"+sec+" - "+this.course.sections[sec].descrip+"\n"
 	str+="</SELECT>"
 	str+="<a href=# onclick='Controllers["+this.id+"].Destroy();>X</a>";
 	this.oDIV.innerHTML=str;
-	str="";
+	delete str;
 	ControllerDIV.appendChild(this.oDIV);
 	this.Choose = function(section)
 	{
@@ -280,6 +286,7 @@ function Controller(course,id)
 		t=this.course.Choose(section);
 		if(!t)return;
 		this.chosen=t;
+		delete t;
 		log('Controller.Choose: we are drawing '+this.chosen.dept+this.chosen.course+this.chosen.section);
 		this.chosen.Draw(this.color);
 
@@ -335,6 +342,7 @@ function GetCourse(course,section)
 			temp=xmlhttp.responseText;
 			xmlready=true;
 			Courses[course]=new Course(course,temp);
+			delete temp;
 			Controllers[Controllers.length] = new Controller(Courses[course],Controllers.length);
 			Controllers[Controllers.length-1].Choose(section)
 		}

@@ -424,8 +424,8 @@ function Ajax()
 	{
 		//handle should only be called from inside the current onreadystatechange callback function
 		//returns true is callback should continue and false if it should stop
- 		if(this.readyState!=4 || this.status!=200 || this.responseText=='')return false;
-		if(this.responseText.indexOf('Query')>-1){
+ 		if(ajax.xmlhttp.readyState!=4 || ajax.xmlhttp.status!=200 || ajax.xmlhttp.responseText=='')return false;
+		if(ajax.xmlhttp.responseText.indexOf('Query')>-1){
 			error(ajax.error);
 			ajax.xmlready=true;
 			return false;
@@ -459,7 +459,7 @@ function CourseGet()
 	}
 	this.Callback = function(){
 		if(!ajax.handle())return;
-		Courses[courseget.course]=new Course(courseget.course,this.responseText);
+		Courses[courseget.course]=new Course(courseget.course,ajax.xmlhttp.responseText);
 		courseget.AddController();
 	}
 	this.StartAjax = function(){

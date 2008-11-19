@@ -12,8 +12,6 @@ mouseUp=true;
 animate=true;
 speed=1;
 
-//This flag is only true when the XMLhttprequest is ready to start a new transaction
-xmlready=true;
 ajax=new Ajax();
 Courses=new Array();
 Controllers=new Array();
@@ -106,6 +104,13 @@ function CalenderBlock(content)
 	{
 		return this.colors[this.colorindex++%this.colors.length];
 	}
+	this.highlighted=[];
+	this.DeselectAll = function(){
+		for(i in this.highlighted)
+			this.highlighted[i].UnHighlight();
+	}
+
+
 }
 //This class is representative of a time and parsing a string as a time.
 function Time(str)
@@ -180,7 +185,7 @@ function AnimateTimeBlock(tb,draw)
 //This class represents a single block of allocated time on the calender.
 function TimeBlock(content,start_time,stop_time,day)
 {
-	this.section=content.split(' ')[2];
+	this.id=content.substr(0,12);
 	this.content=content.replace("\n","<BR/>\n");
 	this.start_time=new Time(start_time);
 	this.stop_time=new Time(stop_time);
@@ -191,9 +196,10 @@ function TimeBlock(content,start_time,stop_time,day)
 	this.oDIV.className="timeblock";
 	this.isdrawn=false;
 	this.color="#FFFFFF";
-	this.Draw = function(color)
+	this.Draw = function(color,id)
 	{
 		if(color)this.color=color;
+		this.oDIV.onclick="Controllers["+id+"].Select();";
 		this.oDIV.style.backgroundColor=this.color;
 		this.oDIV.style.top=Calender.Position(this.start_time);
 		this.oDIV.style.height=Calender.Height(this.start_time,this.stop_time);
@@ -205,6 +211,7 @@ function TimeBlock(content,start_time,stop_time,day)
 	}
 	this.UnDraw = function()
 	{
+		this.oDIV.onclick=null;
 		if(animate)AnimateTimeBlock(this);
 		else{
 			if(!this.isdrawn)return;
@@ -223,10 +230,12 @@ function TimeBlock(content,start_time,stop_time,day)
 	}
 	this.Highlight = function()
 	{
-		this.oDIV.className='timeblock selected';
+		Calender.highlighted[this.id]=this;
+		this.oDIV.className='timeblock highlighted';
 	}
 	this.UnHighlight = function()
 	{
+		delete Calender.highlighted[this.id];
 		this.oDIV.className='timeblock';
 	}
 }
@@ -251,11 +260,11 @@ function Section(dept,course,section,TDR,prof,credit,descrip,seats,seatsa)
 					this.TDR[i].substring(16,23),
 					this.TDR[i][j]));
 	delete str;
-	this.Draw = function(color)
+	this.Draw = function(color,id)
 	{
 		log('Section.Draw();');
 		for(var i in this.timeblocks)
-			this.timeblocks[i].Draw(color);
+			this.timeblocks[i].Draw(color,id);
 	}
 	this.UnDraw = function()
 	{
@@ -263,7 +272,12 @@ function Section(dept,course,section,TDR,prof,credit,descrip,seats,seatsa)
 		for(var i in this.timeblocks)
 			this.timeblocks[i].UnDraw();
 	}
-
+	this.Select = function()
+	{
+		for(var i in this.timeblocks)
+			this.timeblocks[i].Highlight();
+	}
+	
 }
 function Course(course,str)
 {
@@ -352,13 +366,16 @@ function Controller(course,id)
 		catch(e){
 			log('Controller.Choose: handled error');
 		}
-		t=this.course.Choose(section);
-		if(!t)return;
-		this.chosen=t;
-		delete t;
+		this.chosen=this.course.Choose(section);
+		if(!this.chosen)return;
 		log('Controller.Choose: we are drawing '+this.chosen.dept+this.chosen.course+this.chosen.section);
-		this.chosen.Draw(this.color);
+		this.chosen.Draw(this.color,this.id);
 
+	}
+	this.Select = function()
+	{
+		Calender.DeselectAll();
+		this.chosen.Select();	
 	}
 	this.Destroy = function()
 	{
@@ -399,10 +416,10 @@ function Ajax()
 		if(ajax.xmlhttp.readyState!=4 || ajax.xmlhttp.status!=200 || ajax.xmlhttp.responseText=='')return;
 		if(ajax.xmlhttp.responseText.indexOf('Query')>-1){
 			error(ajax.error);
-			xmlready=true;
+			ajax.xmlready=true;
 			return;
 		}
-		xmlready=true;
+		ajax.xmlready=true;
 		ajax.callback(ajax.xmlhttp.responseText);
 	}
 	this.Start = function(obj,callback,URL,error)
@@ -410,7 +427,7 @@ function Ajax()
 		this.obj=obj;
 		this.callback=callback;
 		this.error=(error==null)?"Generic Server Error:\nCould I be any more cyptic?":error;
-		xmlready=false;
+		this.xmlready=false;
 		this.xmlhttp.open('GET',URL,true);
 		this.xmlhttp.send(null);
 	}
@@ -418,7 +435,7 @@ function Ajax()
 }
 function GetCourse(course,section)
 {
-	
+	this.obj=this;	
 	this.course=(course=="")?document.getElementById('tdept').value.toUpperCase()+document.getElementById('tcourse').value:course;
 	this.section=section;
 	this.AddController = function(){
@@ -434,7 +451,7 @@ function GetCourse(course,section)
 	}
 	if(course in Courses)
 		this.AddController();
-	else if(!xmlready)
+	else if(!ajax.xmlready)
 		window.setTimeout(this.StartAjax,100);
 	else
 		this.StartAjax();

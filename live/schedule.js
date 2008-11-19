@@ -405,8 +405,9 @@ function Ajax()
 		xmlready=true;
 		ajax.callback(ajax.xmlhttp.responseText);
 	}
-	this.Start = function(callback,URL,error)
+	this.Start = function(obj,callback,URL,error)
 	{
+		this.obj=obj;
 		this.callback=callback;
 		this.error=(error==null)?"Generic Server Error:\nCould I be any more cyptic?":error;
 		xmlready=false;
@@ -425,11 +426,11 @@ function GetCourse(course,section)
 		Controllers[Controllers.length-1].Choose(this.section)
 	}
 	this.Callback = function(temp){
-		Courses[course]=new Course(course,temp);
-		this.AddController();
+		Courses[this.obj.course]=new Course(this.obj.course,temp);
+		this.obj.AddController();
 	}
 	this.StartAjax = function(){
-		ajax.Start(this.Callback,'getclass.php?class='+this.course,"Course doesn't exist...");
+		ajax.Start(this,this.Callback,'getclass.php?class='+this.course,"Course doesn't exist...");
 	}
 	if(course in Courses)
 		this.AddController();

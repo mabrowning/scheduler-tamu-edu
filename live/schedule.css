@@ -31,7 +31,7 @@
 /******** TimeBlock styles **********/
 .timeblock{
   color:black;
-  position:relative;
+  position:absolute;
   border-top:1px solid black;
   border-bottom:1px solid black;
   background-color:#777777;

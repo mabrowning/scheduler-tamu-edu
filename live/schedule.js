@@ -8,6 +8,10 @@ var Calender=null;
 //mouse flags
 mouseUp=true;
 
+//animation
+animate=true;
+speed=1;
+
 //This flag is only true when the XMLhttprequest is ready to start a new transaction
 xmlready=true;
 Courses=new Array();
@@ -115,6 +119,47 @@ function Time(str)
 		return this.hour+this.minute/60;
 	}
 }
+function AnimateTimeBlock(tb,draw)
+{
+	if(draw){
+		if(tb.drawing)return;
+		if(tb.undrawing){
+			tb.clearInterval(tb.interval);
+			tb.undrawing=false;
+		}
+		else{
+			tb.oDIV.style.opacity=0;
+			Calender.days[tb.day].appendChild(tb.oDIV);
+		}
+		tb.drawing=true;
+		tb.interval=window.setInterval(function(){
+			tb.oDIV.style.opacity+=.25;
+			if(tb.oDIV.style.opacity>=1){
+				window.clearInterval(tb.interval);
+				tb.drawing=false;
+				tb.isdrawn=true;
+			}
+		},200/speed);
+
+	}
+	else{
+		if(tb.undrawing)return;
+		if(tb.drawing){
+			window.clearInterval(tb.interval);
+			tb.drawing=false;
+		}
+		tb.isdrawn=false;
+		tb.undrawing=true;
+		tb.interval=window.setInterval(function(){
+			tb.oDIV.style.opacity-=.25;
+			if(tb.oDIV.style.opacity<=0){
+				window.clearInterval(tb.interval);
+				tb.oDIV.parentNode.removeChild(tb.oDIV);
+				tb.undrawing=false;
+			}
+		},200/speed);
+	}
+}
 //This class represents a single block of allocated time on the calender.
 function TimeBlock(content,start_time,stop_time,day)
 {
@@ -130,19 +175,25 @@ function TimeBlock(content,start_time,stop_time,day)
 	this.color="#FFFFFF";
 	this.Draw = function(color)
 	{
-//		if(this.isdrawn)this.UnDraw();
+		if(this.isdrawn);
 		if(color)this.color=color;
 		this.oDIV.style.backgroundColor=this.color;
 		this.oDIV.style.top=Calender.Position(this.start_time);
 		this.oDIV.style.height=Calender.Height(this.start_time,this.stop_time);
-		Calender.days[this.day].appendChild(this.oDIV);
-		this.isdrawn=true;
+		if(animate)AnimateTimeBlock(this,true);
+		else{
+			Calender.days[this.day].appendChild(this.oDIV);
+			this.isdrawn=true;
+		}
 	}
 	this.UnDraw = function()
 	{
 		if(!this.isdrawn)return;
-		if(this.oDIV.parentNode)this.oDIV.parentNode.removeChild(this.oDIV);
-		this.isdrawn=false;
+		if(animate)AnimateTimeBlock(this);
+		else{
+			if(this.oDIV.parentNode)this.oDIV.parentNode.removeChild(this.oDIV);
+			this.isdrawn=false;
+		}
 	}
 	this.Intersects = function(test)
 	{
@@ -265,13 +316,14 @@ function Controller(course,id)
 	this.oDIV=document.createElement('DIV');
 	this.oDIV.className='controller';
 	this.oDIV.style.backgroundColor=this.color;
-	str="<SELECT onchange='Controllers["+this.id+"].Choose(this.value);'>\n"
+	//This was the old way of doing things
+/*	str="<SELECT onchange='Controllers["+this.id+"].Choose(this.value);'>\n"
 	for(sec in this.course.sections)
 		str+="<OPTION VALUE='"+sec+"'>"+sec+" - "+this.course.sections[sec].descrip+"\n"
 	str+="</SELECT>"
 	str+="<a href=# onclick='Controllers["+this.id+"].Destroy();>X</a>";
 	this.oDIV.innerHTML=str;
-	delete str;
+	delete str;*/
 	ControllerDIV.appendChild(this.oDIV);
 	this.Choose = function(section)
 	{
@@ -293,8 +345,11 @@ function Controller(course,id)
 	}
 	this.Destroy = function()
 	{
-		this.course.UnChoose(this.chosen.section);
-		this.chosen.UnDraw();
+		try{
+			this.course.UnChoose(this.chosen.section);
+			this.chosen.UnDraw();
+		}
+		catch(e)log("Controller.Destoy: handled error");
 		this.oDIV.parentNode.removeChild(this.oDIV);
 		Controllers[this.id]=null;
 	}

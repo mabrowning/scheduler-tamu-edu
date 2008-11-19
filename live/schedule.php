@@ -16,13 +16,13 @@
 		<input maxlength=3 size=3 id='tcourse' onkeypress='entsub(event);'>
 		<BUTTON onclick='GetCourse("","");'>Add</button>
 		<br/><em>Ex: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NUEN  &nbsp;&nbsp;&nbsp; 101</em>
-
-	<div id='coursebrowser'><script type='text/javascript'>browser=new Browser(); </script></div>
+	</div>
+	<div id='coursebrowser'></div>
 	<strong>Total Hours: <span id='hours'>0</span></strong>
 	<div id='controllerDIV'></div>
 </div>
 
 <script>function log(str){document.getElementById('log').innerHTML+=str+"<br/>";}</script>
-<div id='log' style='position:absolute;right:0px;width:300px;top:0px;bottom:0px;overflow:scroll;'></div>
+<div id='log' style='position:absolute;right:0px;width:350px;top:0px;bottom:0px;overflow:scroll;'></div>
 </body>
 </html>

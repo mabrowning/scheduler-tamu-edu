@@ -141,8 +141,7 @@ function AnimateTimeBlock(tb,draw)
 		}
 		tb.drawing=true;
 		tb.interval=window.setInterval(function(){
-			log("drawing from "+tb.opacity+" in "+tb.section);
-			tb.opacity=tb.opacity+.25;
+			tb.opacity=tb.opacity+.2;
 			SetOpacity(tb.oDIV,tb.opacity);
 			if(tb.opacity>.9){
 				log("finished drawing "+tb.section);
@@ -150,29 +149,26 @@ function AnimateTimeBlock(tb,draw)
 				tb.drawing=false;
 				tb.isdrawn=true;
 			}
-		},400/speed);
+		},40/speed);
 
 	}
 	else{
 		if(tb.undrawing)return;
 		if(tb.drawing){
-			log('WERE drawing in '+tb.content.substr(14));
 			window.clearInterval(tb.interval);
 			tb.drawing=false;
 		}
 		tb.undrawing=true;
 		tb.interval=window.setInterval(function(){
-			log("undrawing from "+tb.opacity+" in "+tb.section);
-			tb.opacity=tb.opacity-.25;
+			tb.opacity=tb.opacity-.2;
 			SetOpacity(tb.oDIV,tb.opacity);
 			if(tb.opacity<0.1){
-				log("finished undrawing "+tb.section);
 				window.clearInterval(tb.interval);
 				tb.oDIV.parentNode.removeChild(tb.oDIV);
 				tb.undrawing=false;
 				tb.isdrawn=false;
 			}
-		},400/speed);
+		},40/speed);
 	}
 }
 //This class represents a single block of allocated time on the calender.
@@ -203,9 +199,9 @@ function TimeBlock(content,start_time,stop_time,day)
 	}
 	this.UnDraw = function()
 	{
-		if(!this.isdrawn)return;
 		if(animate)AnimateTimeBlock(this);
 		else{
+			if(!this.isdrawn)return;
 			if(this.oDIV.parentNode)this.oDIV.parentNode.removeChild(this.oDIV);
 			this.isdrawn=false;
 		}

@@ -4,7 +4,7 @@ IE=(navigator.userAgent.toLowerCase().indexOf("msie")>-1)
 //
 //This contains the main calender body
 var Calender=null;
-
+var courseget=null;
 //mouse flags
 mouseUp=true;
 
@@ -28,6 +28,7 @@ function error(str){
 function Init()
 {
 	Calender = new CalenderBlock(document.getElementById('schedulecontainer'));
+	courseget= new CourseGet();
 	ControllerDIV=document.getElementById('controllerDIV');
 	Hourspan=document.getElementById('hours');
 }
@@ -432,7 +433,6 @@ function Ajax()
 	}
 
 }
-courseget= new CourseGet();
 function CourseGet() 
 {
 	this.course="";
@@ -445,7 +445,7 @@ function CourseGet()
 		if(this.course in Courses)
 			this.AddController();
 		else if(!ajax.xmlready)
-			window.setTimeout(this.StartAjax,100);
+			window.setTimeout(courseget.StartAjax,100);
 		else
 			this.StartAjax();
 	}
@@ -462,3 +462,4 @@ function CourseGet()
 		ajax.Start(this.Callback,'getclass.php?class='+this.course,"Course doesn't exist...");
 	}
 }
+

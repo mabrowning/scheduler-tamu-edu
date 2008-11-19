@@ -410,8 +410,8 @@ function Ajax()
 		this.callback=callback;
 		this.error=(error==null)?"Generic Server Error:\nCould I be any more cyptic?":error;
 		xmlready=false;
-		xmlhttp.open('GET',URL,true);
-		xmlhttp.send(null);
+		this.xmlhttp.open('GET',URL,true);
+		this.xmlhttp.send(null);
 	}
 
 }

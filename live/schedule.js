@@ -235,6 +235,7 @@ function Course(course,str)
 		log('Course.Choose('+section+');');
 		if(section in this.chosen){
 			log("Course.Choose: we won't choose a duplicate section!");
+/*			warn("Warning: You've already scheduled this section!");*/
 			return false;
 		}
 		this.chosen[section]='';
@@ -256,6 +257,7 @@ function Controller(course,id)
 	this.color=Calender.GetNextColor();
 	this.oDIV=document.createElement('DIV');
 	this.oDIV.className='controller';
+	this.oDIV.style.backgroundColor=this.color;
 	//This vvvvvvvvvvvvvv needs to be ... worked on.
 	str="<SELECT onchange='Controllers["+this.id+"].Choose(this.value);'>\n"
 	for(sec in this.course.sections)

@@ -141,14 +141,14 @@ function AnimateTimeBlock(tb,draw)
 		tb.drawing=true;
 		tb.interval=window.setInterval(function(){
 			log("AnimateTimeBlock drawing from"+tb.opacity);
-			tb.opacity=tb.opacity+.25;
+			tb.opacity=tb.opacity+.2;
 			SetOpacity(tb.oDIV,tb.opacity);
 			if(tb.opacity>=1){
 				window.clearInterval(tb.interval);
 				tb.drawing=false;
 				tb.isdrawn=true;
 			}
-		},50/speed);
+		},40/speed);
 
 	}
 	else{
@@ -161,14 +161,14 @@ function AnimateTimeBlock(tb,draw)
 		tb.undrawing=true;
 		tb.interval=window.setInterval(function(){
 			log("AnimateTimeBlock undrawing from"+tb.opacity);
-			tb.opacity=tb.opacity-.25;
+			tb.opacity=tb.opacity-.2;
 			SetOpacity(tb.oDIV,tb.opacity);
 			if(tb.opacity<=0){
 				window.clearInterval(tb.interval);
 				tb.oDIV.parentNode.removeChild(tb.oDIV);
 				tb.undrawing=false;
 			}
-		},50/speed);
+		},40/speed);
 	}
 }
 //This class represents a single block of allocated time on the calender.

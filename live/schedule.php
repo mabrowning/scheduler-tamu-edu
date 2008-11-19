@@ -23,6 +23,6 @@
 </div>
 
 <script>function log(str){document.getElementById('log').innerHTML+=str+"<br/>";}</script>
-<div id='log' style='position:absolute;right:300px;width:300px;top:0px;height:800px;overflow:scroll;'></div>
+<div id='log' style='position:absolute;right:0px;width:300px;top:0px;bottom:0px;overflow:scroll;'></div>
 </body>
 </html>

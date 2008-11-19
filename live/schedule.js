@@ -133,6 +133,7 @@ function AnimateTimeBlock(tb,draw)
 		}
 		tb.drawing=true;
 		tb.interval=window.setInterval(function(){
+			log("AnimateTimeBlock drawing step");
 			tb.oDIV.style.opacity+=.25;
 			if(tb.oDIV.style.opacity>=1){
 				window.clearInterval(tb.interval);
@@ -151,6 +152,7 @@ function AnimateTimeBlock(tb,draw)
 		tb.isdrawn=false;
 		tb.undrawing=true;
 		tb.interval=window.setInterval(function(){
+			log("AnimateTimeBlock step");
 			tb.oDIV.style.opacity-=.25;
 			if(tb.oDIV.style.opacity<=0){
 				window.clearInterval(tb.interval);

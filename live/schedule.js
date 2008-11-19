@@ -28,7 +28,7 @@ function error(str){
 function Init()
 {
 	Calender = new CalenderBlock(document.getElementById('schedulecontainer'));
-	courseget= new CourseGet();
+/*	courseget= new CourseGet();*/
 	ControllerDIV=document.getElementById('controllerDIV');
 	Hourspan=document.getElementById('hours');
 }

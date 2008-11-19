@@ -130,7 +130,7 @@ function AnimateTimeBlock(tb,draw)
 	if(draw){
 		if(tb.drawing)return;
 		if(tb.undrawing){
-			log('WERE undrawing in '+tb.content);
+			log('we WERE undrawing in '+tb.section);
 			window.clearInterval(tb.interval);
 			tb.undrawing=false;
 		}
@@ -141,11 +141,11 @@ function AnimateTimeBlock(tb,draw)
 		}
 		tb.drawing=true;
 		tb.interval=window.setInterval(function(){
-			log("AnimateTimeBlock drawing from"+tb.opacity);
+			log("drawing from"+tb.opacity+" in "+tb.section);
 			tb.opacity=tb.opacity+.2;
 			SetOpacity(tb.oDIV,tb.opacity);
 			if(tb.opacity>=1){
-				log("finished drawing"+tb.content);
+				log("finished drawing"+tb.section);
 				window.clearInterval(tb.interval);
 				tb.drawing=false;
 				tb.isdrawn=true;
@@ -162,11 +162,11 @@ function AnimateTimeBlock(tb,draw)
 		}
 		tb.undrawing=true;
 		tb.interval=window.setInterval(function(){
-			log("AnimateTimeBlock undrawing from"+tb.opacity);
+			log("undrawing from"+tb.opacity+" in "+tb.section);
 			tb.opacity=tb.opacity-.2;
 			SetOpacity(tb.oDIV,tb.opacity);
 			if(tb.opacity<=0){
-				log("finished undrawing"+tb.content);
+				log("finished undrawing"+tb.section);
 				window.clearInterval(tb.interval);
 				tb.oDIV.parentNode.removeChild(tb.oDIV);
 				tb.undrawing=false;
@@ -178,6 +178,7 @@ function AnimateTimeBlock(tb,draw)
 //This class represents a single block of allocated time on the calender.
 function TimeBlock(content,start_time,stop_time,day)
 {
+	this.section=content.split(' ')[3];
 	this.content=content.replace("\n","<BR/>\n");
 	this.start_time=new Time(start_time);
 	this.stop_time=new Time(stop_time);

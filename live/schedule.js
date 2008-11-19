@@ -425,7 +425,7 @@ function Ajax()
 		//handle should only be called from inside the current onreadystatechange callback function
 		//returns true is callback should continue and false if it should stop
  		if(this.readyState!=4 || this.status!=200 || this.responseText=='')return false;
-		if(this.responseText.indexOf('Query')>-1)
+		if(this.responseText.indexOf('Query')>-1){
 			error(ajax.error);
 			ajax.xmlready=true;
 			return false;

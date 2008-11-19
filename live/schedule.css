@@ -44,8 +44,8 @@
 #schedulecontainer
 {
   position:relative;
-  height:1000px;
-  width:600px;
+  height:600px;
+  width:1000px;
   left:70px;
   margin-bottom:1em;
 }

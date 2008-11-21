@@ -178,7 +178,7 @@ function AnimateTimeBlock(tb,draw)
 function TimeBlock(content,start_time,stop_time,day)
 {
 	this.id=content.substr(0,12);
-	this.content=content.replace("\n","<BR/>\n");
+	this.content=content.replace("\n","<BR>\n");
 	this.start_time=new Time(start_time);
 	this.stop_time=new Time(stop_time);
 	this.day=day;

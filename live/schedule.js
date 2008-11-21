@@ -105,13 +105,6 @@ function CalenderBlock(content)
 	{
 		return this.colors[this.colorindex++%this.colors.length];
 	}
-	this.highlighted=[];
-	this.DeselectAll = function(){
-		for(i in this.highlighted)
-			this.highlighted[i].UnHighlight();
-	}
-
-
 }
 //This class is representative of a time and parsing a string as a time.
 function Time(str)
@@ -229,12 +222,10 @@ function TimeBlock(content,start_time,stop_time,day)
 	}
 	this.Highlight = function()
 	{
-		Calender.highlighted[this.id]=this;
 		this.oDIV.className='timeblock highlighted';
 	}
 	this.UnHighlight = function()
 	{
-		delete Calender.highlighted[this.id];
 		this.oDIV.className='timeblock';
 	}
 }
@@ -275,8 +266,13 @@ function Section(dept,course,section,TDR,prof,credit,descrip,seats,seatsa)
 	{
 		for(var i in this.timeblocks)
 			this.timeblocks[i].Highlight();
+		return this.timeblocks;
 	}
-	
+	this.DeSelect = function()
+	{
+		for(var i in this.timeblocks)
+			this.timeblocks[i].UnHighlight();
+	}
 }
 function Course(course,str)
 {
@@ -360,6 +356,7 @@ function Controller(course,id)
 		log('Controller.Choose('+section+');');
 		try{
 			this.course.UnChoose(this.chosen.section);
+			this.chosen.DeSelect();
 			this.chosen.UnDraw();
 		}
 		catch(e){
@@ -373,8 +370,14 @@ function Controller(course,id)
 	}
 	this.Select = function()
 	{
-		Calender.DeselectAll();
+		try{
+			Calender.selected.chosen.DeSelect();
+		}
+		catch(e){
+			log('Controller.Select: handled error');
+		}
 		this.chosen.Select();	
+		Calender.selected=this;
 	}
 	this.Destroy = function()
 	{
@@ -456,7 +459,8 @@ function CourseGet()
 	}
 	this.AddController = function(){
 		Controllers[Controllers.length] = new Controller(Courses[this.course],Controllers.length);
-		Controllers[Controllers.length-1].Choose(this.section)
+		Controllers[Controllers.length-1].Choose(this.section);
+		Controllers[Controllers.length-1].Select();
 	}
 	this.Callback = function(){
 		if(!ajax.handle())return;

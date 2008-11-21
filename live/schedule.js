@@ -458,6 +458,9 @@ function RmHours(hour){
 	hours-=hour;
 	hourspan.innerHTML=hours;
 }
+
+//The log DIV is in the way of onclick
+
 function CourseGet() 
 {
 	this.course="";
@@ -469,12 +472,8 @@ function CourseGet()
 		log("CourseGet.GetCourse("+this.course+");");
 		if(this.course in Courses)
 			this.AddController();
-		else if(!ajax.xmlready)
-			window.setTimeout(courseget.StartAjax,100);
-		else{
-			log("Starting StartAjax... "+this.course);
+		else
 			this.StartAjax();
-		}
 	}
 	this.AddController = function(){
 		Controllers[Controllers.length] = new Controller(Courses[this.course],Controllers.length);
@@ -487,6 +486,11 @@ function CourseGet()
 		courseget.AddController();
 	}
 	this.StartAjax = function(){
+
+		if(!ajax.xmlready){
+			window.setTimeout(courseget.StartAjax,100);
+			return;
+		}
 		log("CourseGet.StartAjax(); "+courseget.course);
 		ajax.Start(courseget.Callback,'getclass.php?class='+courseget.course,"Course doesn't exist...");
 	}

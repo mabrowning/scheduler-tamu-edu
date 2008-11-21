@@ -356,8 +356,8 @@ function Controller(course,id)
 		log('Controller.Choose('+section+');');
 		this.Remove();
 		this.chosen=this.course.Choose(section);
-		AddHours(this.chosen.credit);
 		if(!this.chosen)return;
+		AddHours(this.chosen.credit);
 		log('Controller.Choose: we are drawing '+this.chosen.dept+this.chosen.course+this.chosen.section);
 		this.chosen.Draw(this.color,this.id);
 

@@ -1,9 +1,10 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="style.css">
-<script>var mousescroll=true;</script>
-<script src="schedule.js"></script>
 <link rel="stylesheet" type="text/css" href="schedule.css">
+<script type="test/javascript" src="schedule.js"></script>
+<script type="test/javascript" src="mootools.js"></script>
 <title>Schedule Planner</title>
 </head>
 <body style='margin-top:5px;' onload="Init();">
@@ -22,7 +23,9 @@
 	<div id='controllerDIV'></div>
 </div>
 
-<script>function log(str){return;document.getElementById('log').innerHTML+=str+"<br/>";}</script>
+<script type="text/javascript">i
+function log(str){return;document.getElementById('log').innerHTML+=str+"<br/>";}
+</script>
 <div id='log' style='position:absolute;right:0px;width:350px;top:0px;bottom:0px;overflow:scroll;'></div>
 </body>
 </html>

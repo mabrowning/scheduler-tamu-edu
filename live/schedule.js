@@ -354,40 +354,46 @@ function Controller(course,id)
 	this.Choose = function(section)
 	{
 		log('Controller.Choose('+section+');');
-		try{
-			this.course.UnChoose(this.chosen.section);
-			this.chosen.DeSelect();
-			this.chosen.UnDraw();
-		}
-		catch(e){
-			log('Controller.Choose: handled error');
-		}
+		this.Remove();
 		this.chosen=this.course.Choose(section);
+		AddHours(this.chosen.credit);
 		if(!this.chosen)return;
 		log('Controller.Choose: we are drawing '+this.chosen.dept+this.chosen.course+this.chosen.section);
 		this.chosen.Draw(this.color,this.id);
 
 	}
+	this.Remove = function()
+	{
+		try{
+			RmHours(this.chosen.credit);
+			this.course.UnChoose(this.chosen.section);
+			this.chosen.DeSelect();
+			this.chosen.UnDraw();
+		}
+		catch(e){
+			log('Controller.Remove: handled error');
+		}
+	}
 	this.Select = function()
 	{
 		try{
-			Calender.selected.chosen.DeSelect();
+			Calender.selected.DeSelect();
 		}
 		catch(e){
 			log('Controller.Select: handled error');
 		}
 		this.chosen.Select();	
+		this.oDIV.className='controller contrsel';
 		Calender.selected=this;
+	}
+	this.DeSelect = function()
+	{
+		this.chosen.DeSelect();
+		this.oDIV.className='controller';
 	}
 	this.Destroy = function()
 	{
-		try{
-			this.course.UnChoose(this.chosen.section);
-			this.chosen.UnDraw();
-		}
-		catch(e){
-			log("Controller.Destoy: handled error");
-		}
+		this.Remove();
 		this.oDIV.parentNode.removeChild(this.oDIV);
 		Controllers[this.id]=null;
 	}
@@ -438,6 +444,16 @@ function Ajax()
 }
 function curcor(){
 	return document.getElementById('tdept').value.toUpperCase()+document.getElementById('tcourse').value;
+}
+hourspan=document.getElementById('hours');
+var hours=0;
+function AddHours(hour){
+	hours+=hour;
+	hourspan.innerHTML=hours;
+}
+function RmHours(hour){
+	hours-=hour;
+	hourspan.innerHTML=hours;
 }
 function CourseGet() 
 {

@@ -80,6 +80,10 @@
 	border:1px solid #CCCCCC;
 	padding-bottom:8px;
 }
+.contrsel
+{
+	border:2px solid #CCCCCC;
+}
 #container
 {
 	color:black;

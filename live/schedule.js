@@ -446,21 +446,15 @@ function curcor(){
 	return document.getElementById('tdept').value.toUpperCase()+document.getElementById('tcourse').value;
 }
 function AddHours(hour){
-	try{
-		hours+=parseInt(hour);
-	}
-	catch(e){
-		log("AddHours:Invalid credit value");
-	}
+	hour=parseInt(hour);
+	if(!isFinite(hour))return;
+	hours+=hour;
 	hourspan.innerHTML=hours;
 }
 function RmHours(hour){
-	try{
-		hours-=parseInt(hour);
-	}
-	catch(e){
-		log("AddHours:Invalid credit value");
-	}
+	hour=parseInt(hour);
+	if(!isFinite(hour))return;
+	hours-=hour;
 	hourspan.innerHTML=hours;
 }
 function CourseGet() 

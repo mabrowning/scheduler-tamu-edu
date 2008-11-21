@@ -414,17 +414,21 @@ function Ajax()
 	this.error="Course doesn't exist..";
 	this.callback=null;
 	this.xmlhttp=null;
+	this.xmlready=false;
 	if (window.XMLHttpRequest)
 		this.xmlhttp=new XMLHttpRequest();
 	else if (window.ActiveXObject)
 		this.xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	else
+	else{
 		error("No AJAX support in this browser... I'm half sad and half impressed...");
+		return;
+	}
+	this.xmlready=true;
 	this.Start = function(callback,URL,error)
 	{
 		this.xmlhttp.onreadystatechange=callback;
 		this.error=(error==null)?"Generic Server Error:\nCould I be any more cyptic?":error;
-/*		this.xmlready=false;*/
+		this.xmlready=false;
 		this.xmlhttp.open('GET',URL,true);
 		this.xmlhttp.send(null);
 	}

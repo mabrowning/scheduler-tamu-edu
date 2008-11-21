@@ -16,7 +16,7 @@ ajax=new Ajax();
 Courses=new Array();
 Controllers=new Array();
 var ControllerDIV=null;
-var Hourspan=null;
+var hourspan=null;
 hours=0;
 
 //This function is called when there is an error in user input or in operation. Eventually, it will be implemented in an error bar, but for now, we alert();
@@ -30,7 +30,7 @@ function Init()
 	Calender = new CalenderBlock(document.getElementById('schedulecontainer'));
 	courseget= new CourseGet();
 	ControllerDIV=document.getElementById('controllerDIV');
-	Hourspan=document.getElementById('hours');
+	hourspan=document.getElementById('hours');
 }
 //This class is the functional calender. It handles creating the DOM, sizing and distributing the TimeBlocks.
 function CalenderBlock(content)
@@ -445,14 +445,22 @@ function Ajax()
 function curcor(){
 	return document.getElementById('tdept').value.toUpperCase()+document.getElementById('tcourse').value;
 }
-hourspan=document.getElementById('hours');
-var hours=0;
 function AddHours(hour){
-	hours+=hour;
+	try{
+		hours+=parseInt(hour);
+	}
+	catch(e){
+		log("AddHours:Invalid credit value");
+	}
 	hourspan.innerHTML=hours;
 }
 function RmHours(hour){
-	hours-=hour;
+	try{
+		hours-=parseInt(hour);
+	}
+	catch(e){
+		log("AddHours:Invalid credit value");
+	}
 	hourspan.innerHTML=hours;
 }
 function CourseGet() 

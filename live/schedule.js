@@ -382,6 +382,7 @@ function Controller(course,id)
 		catch(e){
 			log('Controller.Select: handled error');
 		}
+		if(this.chosen==""||this.chosen==null)return;
 		this.chosen.Select();	
 		this.oDIV.className='controller contrsel';
 		Calender.selected=this;

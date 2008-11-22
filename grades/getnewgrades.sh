@@ -13,7 +13,7 @@ done
 for filename in *.txt
 do
 	sed -e '/^[A-Z]/!d' -e '/DEPA.*/d' -e '/UNIV.*/d' < $filename >$filename.new
-	./update.py < $filename.new
+	./update_grades.py < $filename.new
 done
 mv *.txt old/
 mv *.new parsed/

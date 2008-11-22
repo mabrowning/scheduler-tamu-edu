@@ -1,7 +1,4 @@
-#! /usr/bin/python
-
 import MySQLdb
-import sys
 
 db = MySQLdb.connect(user="course",passwd="shoot",db="schedule")
 cur = db.cursor()
@@ -38,34 +35,5 @@ def get_prof_id(dept,prof):
 		cur.execute("INSERT INTO profs (department_id,display_name) VALUES( "+str(dept)+", '"+MySQLdb.escape_string(prof)+"');")
 		cur.execute("SELECT LAST_INSERT_ID();")
 		return cur.fetchone()[0]
-def insert_grade(department_id,prof_id,course_id,A,B,C,D,F,TOT):
-	cur.execute("INSERT INTO grades (department_id,prof_id,course_id,A,B,C,D,F,TOT) VALUES "+\
-		"("+department_id+", "+prof_id+", "+course_id+", "+A+", "+B+", "+C+", "+D+", "+F+", "+TOT+");")
-fields={}
-fields["department_id"]=(0,4)
-fields["course_id"]=(5,3)
-#fields["section_number"]=(9,3)
-fields["A"]=(18,7)
-fields["B"]=(26,7)
-fields["C"]=(34,7)
-fields["D"]=(42,7)
-fields["F"]=(50,7)
-fields["TOT"]=(58,6)
-fields["prof_id"]=(108,30)
-for line in sys.stdin:
-	line=line.strip(" \r\n")
-	values={}
-	for f in fields:
-		values[f]=line[fields[f][0]:sum(fields[f])]
-		if(values[f].strip(" ")==''):
-			values[f]='0'
-	if(values["prof_id"]=='0'):
-		continue
-	values["department_id"]=get_dept_id(values["department_id"])
-	values["course_id"]=  get_course_id(values["department_id"],values["course_id"])
-	values["prof_id"]=      get_prof_id(values["department_id"],values["prof_id"])
-	for f in fields:
-			values[f]=str(int(values[f]))
-	if(values['TOT']=='0'):
-		continue
-	insert_grade(**values)
+def insert_grade(A):
+	cur.execute("INSERT INTO grades ("+', '.join(A)+") VALUES ("+', '.join(["%s" % x for x in A.values()])+");")

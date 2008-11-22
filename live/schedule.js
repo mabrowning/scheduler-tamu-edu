@@ -189,7 +189,7 @@ function Section(dept,course,obj)
 	this.seatsa=obj["seats_avail"];
 	this.timeblocks=[];
 	str=this.dept+" "+this.course+" "+this.section+" - "+this.prof+"\n"
-	for(var i=0; i<TDR.length;i++)
+	for(var i=0; i<this.TDR.length;i++)
 		for(var j=0;j<5;j++)
 			if(this.TDR[i][j]!=" ")
 				this.timeblocks.push(new TimeBlock(str+this.TDR[i].substr(24),

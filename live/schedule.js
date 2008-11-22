@@ -424,8 +424,8 @@ function CourseGet()
 	}
 	this.Callback = function(jsonObj){
 /*		if(!ajax.handle())return;*/
-		Courses[this.course]=new Course(this.dept,this.number,jsonObj);
-		this.AddController();
+		Courses[courseget.course]=new Course(courseget.dept,courseget.number,jsonObj);
+		courseget.AddController();
 	}
 	this.StartAjax = function(){
 

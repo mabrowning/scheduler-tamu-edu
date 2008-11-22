@@ -180,13 +180,17 @@ function Section(dept,course,obj)
 {
 	this.dept=dept;
 	this.course=course;
-	this.section=obj["number"];
+	for(atr in obj){
+		if(atr.substr(0,3)=="TDR")continue;
+		this[atr]=obj[atr];
+	}
 	this.TDR=(new Array(obj["TDR0"],obj["TDR1"],obj["TDR2"],obj["TDR3"],obj["TDR4"])).clean();
-	this.prof=obj["prof"];
+	/*this.section=obj["number"];
+	this.prof=obj["display_name"];
 	this.credit=obj["credit"];
 	this.descrip=obj["description_string"];
 	this.seats=obj["seats"];
-	this.seatsa=obj["seats_avail"];
+	this.seatsa=obj["seats_avail"];*/
 	this.timeblocks=[];
 	str=this.dept+" "+this.course+" "+this.section+" - "+this.prof+"\n"
 	for(var i=0; i<this.TDR.length;i++)

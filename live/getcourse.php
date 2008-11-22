@@ -10,7 +10,7 @@ $semester=mysql_real_escape_string($_REQUEST["semester"]);
 
 
 $JSON=Array();
-$sql="SELECT sections.number, TDR0, TDR1, TDR2, TDR3, TDR4, seats, seats_avail, sections.description_string, notes, credit, display_name ";
+$sql="SELECT sections.number AS section, TDR0, TDR1, TDR2, TDR3, TDR4, seats, seats_avail AS seatsa, sections.description_string AS descrip, notes, credit, display_name AS prof";
 $sql.="FROM sections,courses,allcourses,departments,profs WHERE allcourses.number=".$number." AND dept='".$dept."' AND ";
 $sql.="semester='".$semester."' AND sections.course_id=courses.id AND courses.course_id=allcourses.id AND ";
 $sql.="allcourses.department_id=departments.id AND profs.department_id=departments.id AND prof_id=profs.id";

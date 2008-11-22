@@ -160,6 +160,7 @@ f = open("courses.pkl","wb")
 pickle.dump(sects, f)
 pickle.dump(depts, f)
 pickle.dump(courses, f)
+pickle.dump("2009A",f)
 f.close()
 print "saved everything to courses.pkl!  Make sure to run ./interpret.py"
 

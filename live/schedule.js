@@ -181,7 +181,7 @@ function Section(dept,course,obj)
 	this.dept=dept;
 	this.course=course;
 	this.section=obj["number"];
-	this.TDR=Array(obj[i]["TDR0"],obj[i]["TDR1"],obj[i]["TDR2"],obj[i]["TDR3"],obj[i]["TDR4"],).clean();
+	this.TDR=new Array(obj[i]["TDR0"],obj[i]["TDR1"],obj[i]["TDR2"],obj[i]["TDR3"],obj[i]["TDR4"],).clean();
 	this.prof=obj["prof"];
 	this.credit=obj["credit"];
 	this.descrip=obj["description_string"];

@@ -15,10 +15,7 @@ $sql.="FROM sections,courses,allcourses,departments,profs WHERE allcourses.numbe
 $sql.="semester='".$semester."' AND sections.course_id=courses.id AND courses.course_id=allcourses.id AND ";
 $sql.="allcourses.department_id=departments.id AND profs.department_id=departments.id AND prof_id=profs.id";
 $result=mysql_query($sql)or die('Query failed: ' . mysql_error());
-while($JSON[]=mysql_fetch_array($result,MYSQL_ASSOC));
-print_r($JSON);
-
-print "---------------";
+while($row=mysql_fetch_array($result,MYSQL_ASSOC)){$JSON[]=$row;}
 print json_encode($JSON);
 mysql_close($conn);
 

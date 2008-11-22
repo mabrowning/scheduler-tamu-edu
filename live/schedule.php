@@ -24,7 +24,7 @@
 	<div id='controllerDIV'></div>
 </div>
 
-<script type="text/javascript">i
+<script type="text/javascript">
 function log(str){return;document.getElementById('log').innerHTML+=str+"<br>";}
 </script>
 <div id='log' style='position:absolute;right:0px;width:350px;top:0px;bottom:0px;overflow:scroll;'></div>

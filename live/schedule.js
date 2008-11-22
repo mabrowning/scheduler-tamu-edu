@@ -135,7 +135,7 @@ function TimeBlock(content,start_time,stop_time,day)
 	this.oDIV.innerHTML=this.content;
 	this.oDIV.setAttribute('title',start_time+" - "+stop_time);
 	this.oDIV.className="timeblock";
-	$(this.oDIV).fade('out');
+	$(this.oDIV).fade('hide');
 	this.isdrawn=false;
 	this.color="#FFFFFF";
 	this.Draw = function(color,id)

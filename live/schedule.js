@@ -8,9 +8,7 @@ var Calender=null;
 //mouse flags
 mouseUp=true;
 
-//animation
-animate=true;
-speed=1;
+var semester='2009A'
 
 ajax=new Ajax();
 Courses=new Array();
@@ -178,17 +176,17 @@ function TimeBlock(content,start_time,stop_time,day)
 		this.oDIV.className='timeblock';
 	}
 }
-function Section(dept,course,section,TDR,prof,credit,descrip,seats,seatsa)
+function Section(dept,course,obj)
 {
 	this.dept=dept;
 	this.course=course;
-	this.section=section;
-	this.TDR=TDR;
-	this.prof=prof;
-	this.credit=credit;
-	this.descrip=descrip;
-	this.seats=seats;
-	this.seatsa=seatsa;
+	this.section=obj["number"];
+	this.TDR=Array(obj[i]["TDR0"],obj[i]["TDR1"],obj[i]["TDR2"],obj[i]["TDR3"],obj[i]["TDR4"],).clean();
+	this.prof=obj["prof"];
+	this.credit=obj["credit"];
+	this.descrip=obj["description_string"];
+	this.seats=obj["seats"];
+	this.seatsa=obj["seats_avail"];
 	this.timeblocks=[];
 	str=dept+" "+course+" "+section+" - "+prof+"\n"
 	for(var i in this.TDR)
@@ -223,32 +221,16 @@ function Section(dept,course,section,TDR,prof,credit,descrip,seats,seatsa)
 			this.timeblocks[i].UnHighlight();
 	}
 }
-function Course(course,str)
+function Course(dept,number,obj)
 {
-	temp=document.createElement('DIV');
-	temp.innerHTML=str;
-	temp=temp.firstChild;
 	this.sections=Array();
 	this.chosen=Array();
-	this.course=course.substr(0,7);
-	for(var i=0;i<temp.rows.length;i++)
-	{//(dept,class,section,TDR,prof,credit,descrip,seats,seatsa)
-		TDR=[];
-		for(var j=6;j<11;j++)
-			 if(temp.rows[i].cells[j].innerHTML!="")
-				 TDR.push(temp.rows[i].cells[j].innerHTML)
-		this.sections[temp.rows[i].cells[0].innerHTML]=new Section(
-		course.substr(0,4),
-		course.substr(4,3),
-		temp.rows[i].cells[0].innerHTML,
-		TDR,
-		temp.rows[i].cells[1].innerHTML,
-		temp.rows[i].cells[3].innerHTML,
-		temp.rows[i].cells[2].innerHTML,
-		temp.rows[i].cells[4].innerHTML,
-		temp.rows[i].cells[5].innerHTML);
+	this.dept=dept;
+	this.number=number;
+	for(var i=0;i<obj.length;i++)
+	{
+		this.sections[obj[i]["number"]]=new Section(this.dept,this.number,obj[i]);
 	}
-	delete temp;
 	this.Choose = function(section)
 	{
 		if(section==''||section==null)
@@ -417,35 +399,42 @@ function RmHours(hour){
 function CourseGet() 
 {
 	this.course="";
+	this.dept="";
+	this.number="";
 	this.section="";
 	this.GetCourse = function(course,section)
 	{
 		this.course=course;
+		this.dept=course.substr(0,4);
+		this.number=course.substr(4,3);
 		this.section=section;
 		log("CourseGet.GetCourse("+this.course+");");
 		if(this.course in Courses)
 			this.AddController();
 		else
-			this.StartAjax();
+			this.request = new Request.JSON({
+				url: 'getcourse.php?semester='+semester+'&dept='+this.dept+'&number='+this.number,
+				onComplete: this.Callback 
+			}).send();
 	}
 	this.AddController = function(){
 		Controllers[Controllers.length] = new Controller(Courses[this.course],Controllers.length);
 		Controllers[Controllers.length-1].Choose(this.section);
 		Controllers[Controllers.length-1].Select();
 	}
-	this.Callback = function(){
-		if(!ajax.handle())return;
-		Courses[courseget.course]=new Course(courseget.course,ajax.xmlhttp.responseText);
-		courseget.AddController();
+	this.Callback = function(jsonObj){
+/*		if(!ajax.handle())return;*/
+		Courses[this.course]=new Course(this.dept,this.number,jsonObj);
+		this.AddController();
 	}
 	this.StartAjax = function(){
 
-		if(!ajax.xmlready){
+	/*	if(!ajax.xmlready){
 			window.setTimeout(courseget.StartAjax,100);
 			return;
 		}
 		log("CourseGet.StartAjax(); "+courseget.course);
-		ajax.Start(courseget.Callback,'getclass.php?class='+courseget.course,"Course doesn't exist...");
+		ajax.Start(courseget.Callback,'getclass.php?class='+courseget.course,"Course doesn't exist...");*/
 	}
 }
 

@@ -124,56 +124,7 @@ function Time(str)
 		return this.hour+this.minute/60;
 	}
 }
-function SetOpacity(div,opacity){
-	if(IE)
-		div.style.filter='alpha(opacity='+opacity*100+')';
-	else
-		div.style.opacity=opacity;
-}
-function AnimateTimeBlock(tb,draw)
-{
-	if(draw){
-		if(tb.drawing)return;
-		if(tb.undrawing){
-			window.clearInterval(tb.interval);
-			tb.undrawing=false;
-		}
-		else{
-			tb.opacity=0;
-			SetOpacity(tb.oDIV,tb.opacity);
-			Calender.days[tb.day].appendChild(tb.oDIV);
-		}
-		tb.drawing=true;
-		tb.interval=window.setInterval(function(){
-			tb.opacity=tb.opacity+.2;
-			SetOpacity(tb.oDIV,tb.opacity);
-			if(tb.opacity>.9){
-				window.clearInterval(tb.interval);
-				tb.drawing=false;
-				tb.isdrawn=true;
-			}
-		},50/speed);
 
-	}
-	else{
-		if(tb.undrawing)return;
-		if(tb.drawing){
-			window.clearInterval(tb.interval);
-			tb.drawing=false;
-		}
-		tb.undrawing=true;
-		tb.interval=window.setInterval(function(){
-			tb.opacity=tb.opacity-.2;
-			SetOpacity(tb.oDIV,tb.opacity);
-			if(tb.opacity<0.1){
-				window.clearInterval(tb.interval);
-				tb.oDIV.parentNode.removeChild(tb.oDIV);
-				tb.undrawing=false;
-				tb.isdrawn=false;
-			}
-		},50/speed);
-	}
-}
 //This class represents a single block of allocated time on the calender.
 function TimeBlock(content,start_time,stop_time,day)
 {
@@ -186,6 +137,7 @@ function TimeBlock(content,start_time,stop_time,day)
 	this.oDIV.innerHTML=this.content;
 	this.oDIV.setAttribute('title',start_time+" - "+stop_time);
 	this.oDIV.className="timeblock";
+	$(this.oDIV).fade('out');
 	this.isdrawn=false;
 	this.color="#FFFFFF";
 	this.Draw = function(color,id)
@@ -195,21 +147,18 @@ function TimeBlock(content,start_time,stop_time,day)
 		this.oDIV.style.backgroundColor=this.color;
 		this.oDIV.style.top=Calender.Position(this.start_time);
 		this.oDIV.style.height=Calender.Height(this.start_time,this.stop_time);
-		if(animate)AnimateTimeBlock(this,true);
-		else{
-			Calender.days[this.day].appendChild(this.oDIV);
-			this.isdrawn=true;
-		}
+		Calender.days[this.day].appendChild(this.oDIV);
+		$(this.oDIV).fade('in');
+		this.isdrawn=true;
+
 	}
 	this.UnDraw = function()
 	{
 		this.oDIV.onclick=null;
-		if(animate)AnimateTimeBlock(this);
-		else{
-			if(!this.isdrawn)return;
-			if(this.oDIV.parentNode)this.oDIV.parentNode.removeChild(this.oDIV);
-			this.isdrawn=false;
-		}
+		if(!this.isdrawn)return;
+		$(this.oDIV).fade('out');
+		if(this.oDIV.parentNode)this.oDIV.parentNode.removeChild(this.oDIV);
+		this.isdrawn=false;
 	}
 	this.Intersects = function(test)
 	{

@@ -6,6 +6,7 @@ f = open("courses.pkl","rb")
 sects=pickle.load(f)
 depts=pickle.load(f)
 courses=pickle.load(f)
+semester=pickle.load(f)
 f.close()
 print "adding departments..."
 for de in depts:
@@ -13,10 +14,16 @@ for de in depts:
 print "adding courses..."
 for de in courses:
 	for co in courses[de]:
-		courses[de][co]=get_course_id(depts[de],courses[de][co],sects[de][co][0]["description"])
+		try:
+			courses[de][co]=get_course_id(depts[de],courses[de][co],sects[de][co][0]["description"])
+		except KeyError:
+			print sects[de][co]
 print "adding profs and sections..."
 for de in sects:
 	for co in sects[de]:
 		for se in sects[de][co]:
-			se["prof"]=get_prof_id(se["prof"])
-			insert_section(courses[de][co],se,depts[de][0])
+			try:
+				se["prof"]=get_prof_id(depts[de],se["prof"])
+				insert_section(courses[de][co],se,depts[de],semester)
+			except KeyError:
+				print se

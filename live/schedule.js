@@ -180,54 +180,53 @@ function Section(dept,course,obj)
 {
 	this.dept=dept;
 	this.course=course;
+	this.timeblocks=[];
+	str=this.dept+" "+this.course+" "+this.section+" - "+obj.prof+"\n"
 	for(atr in obj){
-		if(atr.substr(0,3)=="TDR")continue;
+		if(atr.substr(0,3)=="TDR")
+			if(obj[atr])
+			{
+				for(var j=0;j<5;j++)
+					if(obj[atr][j]!=" ")
+						this.timeblocks.push(new TimeBlock(str+obj[atr].substr(24),
+							obj[atr].substring(8,15),
+							obj[atr].substring(16,23),
+							obj[atr][j]));
+			}
+			else
+				continue;
 		this[atr]=obj[atr];
 	}
-	this.TDR=(new Array(obj["TDR0"],obj["TDR1"],obj["TDR2"],obj["TDR3"],obj["TDR4"])).clean();
+	delete str;
 	/*this.section=obj["number"];
 	this.prof=obj["display_name"];
 	this.credit=obj["credit"];
 	this.descrip=obj["description_string"];
 	this.seats=obj["seats"];
 	this.seatsa=obj["seats_avail"];*/
-	this.timeblocks=[];
-	str=this.dept+" "+this.course+" "+this.section+" - "+this.prof+"\n"
-	for(var i=0; i<this.TDR.length;i++)
-		for(var j=0;j<5;j++)
-			if(this.TDR[i][j]!=" ")
-				this.timeblocks.push(new TimeBlock(str+this.TDR[i].substr(24),
-					this.TDR[i].substring(8,15),
-					this.TDR[i].substring(16,23),
-					this.TDR[i][j]));
-	delete str;
 	this.Draw = function(color,id)
 	{
 		log('Section.Draw();');
-		this.color=color;
-		this.id=id;
+		temp.color=color;
+		temp.id=id;
 		this.timeblocks.each(function(tb){
 				tb.Draw(this.color,this.id)
-			},this);
-/*		for(var i=0; i<this.timeblocks.length;i++)
-			this.timeblocks[i].Draw(color,id);*/
+			},temp);
+		delete temp;
 	}
 	this.UnDraw = function()
 	{
 		log('Section.UnDraw();');
-		for(var i=0;i<this.timeblocks.length;i++)
-			this.timeblocks[i].UnDraw();
+		this.timeblocks.each(function(tb){tb.UnDraw();});
 	}
 	this.Select = function()
 	{
-		for(var i=0;i<this.timeblocks.length;i++)
-			this.timeblocks[i].Highlight();
+		this.timeblocks.each(function(tb){tb.Highlight();});
 		/*return this.timeblocks;*/
 	}
 	this.DeSelect = function()
 	{
-		for(var i=0;i<this.timeblocks.length;i++)
-			this.timeblocks[i].UnHighlight();
+		this.timeblocks.each(function(tb){tb.UnHighlight();});
 	}
 }
 function Course(dept,number,obj)
@@ -236,10 +235,11 @@ function Course(dept,number,obj)
 	this.chosen=Array();
 	this.dept=dept;
 	this.number=number;
-	for(var i=0;i<obj.length;i++)
+	obj.each(function(row){this.sections[row.section]=new Section(this.dept,this.number,row)},this);
+/*	for(var i=0;i<obj.length;i++)
 	{
 		this.sections[obj[i].section]=new Section(this.dept,this.number,obj[i]);
-	}
+	}*/
 	this.Choose = function(section)
 	{
 		if(section==''||section==null)
@@ -283,13 +283,12 @@ function Controller(course,id)
 	this.oDIV.className='controller';
 	this.oDIV.style.backgroundColor=this.color;
 	//This was the old way of doing things
-	str="<SELECT onchange='Controllers["+this.id+"].Choose(this.value);'>\n"
-	for(sec in this.course.sections)
-		str+="<OPTION VALUE='"+sec+"'>"+sec+" - "+this.course.sections[sec].descrip+"\n"
-	str+="</SELECT>"
-	str+="<a href=# onclick='Controllers["+this.id+"].Destroy();>X</a>";
-	this.oDIV.innerHTML=str;
-	delete str;
+	
+	this.str="<SELECT onchange='Controllers["+this.id+"].Choose(this.value);'>\n"
+	this.course.sections.each(function(secobj,sec){this.str+="<OPTION VALUE='"+sec+"'>"+sec+" - "+secobj.descrip+"\n";},this);
+	this.str+="</SELECT>"
+	this.str+="<a href=# onclick='Controllers["+this.id+"].Destroy();>X</a>";
+	this.oDIV.innerHTML=this.str;
 	ControllerDIV.appendChild(this.oDIV);
 	this.Choose = function(section)
 	{

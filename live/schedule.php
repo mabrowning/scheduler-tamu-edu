@@ -4,8 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="style.css">
 <link rel="stylesheet" type="text/css" href="schedule.css">
-<script type="test/javascript" src="schedule.js"></script>
-<script type="test/javascript" src="mootools.js"></script>
+<script type="text/javascript" src="schedule.js"></script>
+<script type="text/javascript" src="mootools.js"></script>
 <title>Schedule Planner</title>
 </head>
 <body style='margin-top:5px;' onload="Init();">

@@ -29,9 +29,9 @@ CREATE TABLE IF NOT EXISTS grades(
   C INT(3) NOT NULL,
   D INT(3) NOT NULL,
   F INT(3) NOT NULL,
-  TOT INT(3) NOT NULL
-  FOREIGN KEY (department_id) REFERENCES departments (id)
-  FOREIGN KEY (prof_id) REFERENCES profs (id)
+  TOT INT(3) NOT NULL,
+  FOREIGN KEY (department_id) REFERENCES departments (id),
+  FOREIGN KEY (prof_id) REFERENCES profs (id),
   FOREIGN KEY (course_id) REFERENCES allcourses (id)
 );
 

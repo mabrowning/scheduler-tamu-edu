@@ -12,4 +12,7 @@ print "updating profs and sections..."
 for de in sects:
 	for co in sects[de]:
 		for se in sects[de][co]:
-			update_section(courses[de][co],se,depts[de])
+			try:
+				update_section(courses[de][co],se,depts[de],semester)
+			except KeyError:
+				print "Skipping:",se

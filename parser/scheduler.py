@@ -41,10 +41,10 @@ def insert_section(course,section,dept,semester):
 	cur.execute("INSERT INTO courses (semester,course_id) VALUES ( '"+semester+"', "+str(course)+");")
 	cur.execute("SELECT LAST_INSERT_ID();")
 	course=cur.fetchone()[0]
-	sql="INSERT INTO sections (semester, course_id, prof_id, number, seats, seats_avail, credit, honors, writing_intensive, description_string, notes"
+	sql="INSERT INTO sections (course_id, prof_id, number, seats, seats_avail, credit, honors, writing_intensive, description_string, notes"
 	for i in range(len(section["tdr"])):
 		sql+=", TDR"+str(i)
-	sql+=" ) VALUES ('"+semester+"', "+str(course)+", "+str(section["prof"])+", "+section["section"]+", "+section["totalseats"]+", "+section["availseats"]+", "
+	sql+=" ) VALUES ("+str(course)+", "+str(section["prof"])+", "+section["section"]+", "+section["totalseats"]+", "+section["availseats"]+", "
 	sql+=section["credit"].split(' ')[0]+", " 
 	if ((int(section["section"])>=200 and int(section["section"])<300) or int(section["section"])==970):
 		sql+="1, "
@@ -61,13 +61,14 @@ def insert_section(course,section,dept,semester):
 	cur.execute(sql)
 def update_section(course,section,dept,semester):
 	dept_id=get_dept_id(dept)
-	cur.execute("SELECT sections.id FROM sections,courses,allcourses WHERE courses.course_id=allcourses.id "+\
-  "AND department_id='"+str(dept_id)+"' AND sections.number="+str(section["number"])+"' AND allcourses.number="+str(course)+" AND semester;")
+	sql="SELECT sections.id FROM sections,courses,allcourses WHERE courses.course_id=allcourses.id "+\
+	"AND department_id="+str(dept_id)+" AND sections.number="+str(section["section"])+" AND allcourses.number="+str(course)+" AND semester='"+semester+"';"
+	cur.execute(sql)
 	id=cur.fetchone()[0]
 	section["prof"]=get_prof_id(dept_id,section["prof"])
 	sql="UPDATE sections SET prof_id="+str(section["prof"])+", seats="+section["totalseats"]+", seats_avail="+section["availseats"]+", "
 	sql+="description_string='"+MySQLdb.escape_string(section["description"])+"', notes='"+MySQLdb.escape_string(section["notes"].strip("\n"))
 	for i in range(len(section["tdr"])):
 		sql+="', TDR"+str(i)+"='"+section["tdr"][i]
-	sql+="' WHERE id="+id+";"
+	sql+="' WHERE id="+str(id)+";"
 	cur.execute(sql)

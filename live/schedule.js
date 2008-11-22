@@ -188,7 +188,7 @@ function Section(dept,course,obj)
 	this.seats=obj["seats"];
 	this.seatsa=obj["seats_avail"];
 	this.timeblocks=[];
-	str=dept+" "+course+" "+section+" - "+prof+"\n"
+	str=this.dept+" "+this.course+" "+this.section+" - "+this.prof+"\n"
 	for(var i in this.TDR)
 		for(var j=0;j<5;j++)
 			if(this.TDR[i][j]!=" ")

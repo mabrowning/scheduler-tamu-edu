@@ -200,24 +200,24 @@ function Section(dept,course,obj)
 	this.Draw = function(color,id)
 	{
 		log('Section.Draw();');
-		for(var i in this.timeblocks)
+		for(var i=0; i<this.timeblocks.length;i++)
 			this.timeblocks[i].Draw(color,id);
 	}
 	this.UnDraw = function()
 	{
 		log('Section.UnDraw();');
-		for(var i in this.timeblocks)
+		for(var i=0;i<this.timeblocks.length;i++)
 			this.timeblocks[i].UnDraw();
 	}
 	this.Select = function()
 	{
-		for(var i in this.timeblocks)
+		for(var i=0;i<this.timeblocks.length;i++)
 			this.timeblocks[i].Highlight();
-		return this.timeblocks;
+		/*return this.timeblocks;*/
 	}
 	this.DeSelect = function()
 	{
-		for(var i in this.timeblocks)
+		for(var i=0;i<this.timeblocks.length;i++)
 			this.timeblocks[i].UnHighlight();
 	}
 }

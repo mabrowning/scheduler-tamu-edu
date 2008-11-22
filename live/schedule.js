@@ -178,6 +178,7 @@ function TimeBlock(content,start_time,stop_time,day)
 }
 function Section(dept,course,obj)
 {
+	alert(obj);
 	this.dept=dept;
 	this.course=course;
 	this.section=obj["number"];

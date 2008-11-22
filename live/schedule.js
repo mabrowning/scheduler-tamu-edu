@@ -204,8 +204,13 @@ function Section(dept,course,obj)
 	this.Draw = function(color,id)
 	{
 		log('Section.Draw();');
-		for(var i=0; i<this.timeblocks.length;i++)
-			this.timeblocks[i].Draw(color,id);
+		this.color=color;
+		this.id=id;
+		this.timeblocks.each(function(tb){
+				tb.Draw(this.color,this.id)
+			},this);
+/*		for(var i=0; i<this.timeblocks.length;i++)
+			this.timeblocks[i].Draw(color,id);*/
 	}
 	this.UnDraw = function()
 	{
@@ -233,7 +238,7 @@ function Course(dept,number,obj)
 	this.number=number;
 	for(var i=0;i<obj.length;i++)
 	{
-		this.sections[obj[i]["number"]]=new Section(this.dept,this.number,obj[i]);
+		this.sections[obj[i].section]=new Section(this.dept,this.number,obj[i]);
 	}
 	this.Choose = function(section)
 	{

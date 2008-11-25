@@ -181,6 +181,7 @@ function Section(dept,course,obj)
 	this.dept=dept;
 	this.course=course;
 	this.timeblocks=[];
+	this.section=obj["section"];
 	str=this.dept+" "+this.course+" "+this.section+" - "+obj.prof+"\n"
 	for(atr in obj){
 		if(atr.substr(0,3)=="TDR")

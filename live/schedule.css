@@ -32,7 +32,8 @@
   border-bottom:1px solid black;
 /*  border-right:1px solid black;*/
   background-color:#777777;
-  width:19.9%;
+  width:19.99%;
+  overflow:hidden;
 }
 .highlighted
 {
@@ -48,6 +49,7 @@
   width:90%;
   left:70px;
   margin-bottom:1em;
+  overflow:hidden;
 }
 #hourlabels
 {

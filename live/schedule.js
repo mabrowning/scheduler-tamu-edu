@@ -198,21 +198,16 @@ function Section(dept,course,obj)
 		this[atr]=obj[atr];
 	}
 	delete str;
-	/*this.section=obj["number"];
-	this.prof=obj["display_name"];
-	this.credit=obj["credit"];
-	this.descrip=obj["description_string"];
-	this.seats=obj["seats"];
-	this.seatsa=obj["seats_avail"];*/
 	this.Draw = function(color,id)
 	{
 		log('Section.Draw();');
-		temp.color=color;
-		temp.id=id;
+		this.color=color;
+		this.id=id;
 		this.timeblocks.each(function(tb){
 				tb.Draw(this.color,this.id)
-			},temp);
-		delete temp;
+			},this);
+		delete this.id;
+		delete this.color;
 	}
 	this.UnDraw = function()
 	{
